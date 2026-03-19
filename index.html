@@ -366,11 +366,21 @@ function filtered() {
   });
 }
 
-// Rate-limited image fetch queue
+// ── IMAGE FETCHING ───────────────────────────────────────────────────────────
+// Each plant gets a stable DOM id based on its scientific name so the grid
+// card can always be found and updated, even after the modal closes.
+function cardImgId(plant) {
+  return 'img-' + plant.scientific.replace(/[^a-zA-Z0-9]/g, '_');
+}
+function cardPhId(plant) {
+  return 'ph-' + plant.scientific.replace(/[^a-zA-Z0-9]/g, '_');
+}
+
+// Rate-limited queue — max 2 concurrent, 500 ms gap between starts
 const fetchQueue = [];
 let activeFetches = 0;
-const MAX_CONCURRENT = 3;
-const FETCH_DELAY = 300; // ms between fetches
+const MAX_CONCURRENT = 2;
+const FETCH_DELAY = 500;
 
 function queueFetch(plant, callback) {
   fetchQueue.push({plant, callback});
@@ -382,27 +392,57 @@ function processQueue() {
   const {plant, callback} = fetchQueue.shift();
   activeFetches++;
   const key = plant.scientific;
-  if (imgCache[key] !== undefined) {
+  if (imgCache[key] !== undefined && imgCache[key] !== null) {
     activeFetches--;
     callback(imgCache[key]);
     setTimeout(processQueue, 0);
     return;
   }
-  const q = plant.scientific.split(' ').slice(0,2).join(' ');
-  fetch(`https://api.inaturalist.org/v1/taxa?q=${encodeURIComponent(q)}&per_page=1&locale=en`)
-    .then(r => r.json())
-    .then(d => {
-      const url = d.results?.[0]?.default_photo?.medium_url || '';
-      imgCache[key] = url;
-      callback(url);
-    })
-    .catch(() => { imgCache[key] = ''; callback(''); })
-    .finally(() => {
-      activeFetches--;
-      setTimeout(processQueue, FETCH_DELAY);
-    });
+  fetchImageUrl(plant).then(url => {
+    imgCache[key] = url;
+    callback(url);
+    // Also update the grid card if it's currently visible
+    updateGridCard(plant, url);
+  }).finally(() => {
+    activeFetches--;
+    setTimeout(processQueue, FETCH_DELAY);
+  });
 }
 
+// Try iNaturalist first, fall back to Wikimedia
+async function fetchImageUrl(plant) {
+  const q = plant.scientific.split(' ').slice(0,2).join(' ');
+  // 1. iNaturalist
+  try {
+    const r = await fetch(`https://api.inaturalist.org/v1/taxa?q=${encodeURIComponent(q)}&per_page=1&locale=en`);
+    const d = await r.json();
+    const url = d.results?.[0]?.default_photo?.medium_url || '';
+    if (url) return url;
+  } catch(e) {}
+  // 2. Wikimedia fallback
+  try {
+    const title = encodeURIComponent(q.replace(/ /g, '_'));
+    const r = await fetch(`https://en.wikipedia.org/w/api.php?action=query&titles=${title}&prop=pageimages&format=json&pithumbsize=400&origin=*`);
+    const d = await r.json();
+    const pages = d.query?.pages || {};
+    const url = Object.values(pages)[0]?.thumbnail?.source || '';
+    if (url) return url;
+  } catch(e) {}
+  return '';
+}
+
+// Update a grid card's image without re-rendering the whole grid
+function updateGridCard(plant, url) {
+  if (!url) return;
+  const img = document.getElementById(cardImgId(plant));
+  const ph = document.getElementById(cardPhId(plant));
+  if (img && !img.classList.contains('loaded')) {
+    img.src = url;
+    img.onload = () => { img.classList.add('loaded'); if (ph) ph.style.display = 'none'; };
+  }
+}
+
+// ── GRID ─────────────────────────────────────────────────────────────────────
 function renderGrid() {
   const plants = filtered();
   const grid = document.getElementById('grid');
@@ -415,14 +455,15 @@ function renderGrid() {
     return;
   }
 
-  plants.forEach((plant, i) => {
+  plants.forEach(plant => {
     const card = document.createElement('div');
     card.className = 'card';
-    const uid = `c${i}${Date.now()}`;
+    const iid = cardImgId(plant);
+    const pid = cardPhId(plant);
     card.innerHTML = `
       <div class="card-img">
-        <div class="placeholder" id="ph-${uid}">🌿<span>Loading…</span></div>
-        <img id="img-${uid}" alt="${plant.common}">
+        <div class="placeholder" id="${pid}">🌿<span>Loading…</span></div>
+        <img id="${iid}" alt="${plant.common}">
       </div>
       <div class="card-body">
         <div class="card-common">${plant.common}</div>
@@ -432,40 +473,45 @@ function renderGrid() {
     card.onclick = () => openModal(plant);
     grid.appendChild(card);
 
-    queueFetch(plant, url => {
-      const img = document.getElementById(`img-${uid}`);
-      const ph = document.getElementById(`ph-${uid}`);
-      if (!img) return;
-      if (url) {
-        img.src = url;
-        img.onload = () => { img.classList.add('loaded'); if(ph) ph.style.display='none'; };
-      } else {
-        // No photo found — make placeholder clickable to retry
-        if (ph) {
-          ph.querySelector('span').textContent = 'Tap to retry';
-          ph.classList.add('retryable');
-          ph.innerHTML = '🌿<span class="retry-hint">Tap for photo</span>';
-          ph.onclick = (e) => {
-            e.stopPropagation();
-            ph.innerHTML = '🌿<span>Retrying…</span>';
-            ph.classList.remove('retryable');
-            delete imgCache[plant.scientific];
-            queueFetch(plant, retryUrl => {
-              if (retryUrl) {
-                img.src = retryUrl;
-                img.onload = () => { img.classList.add('loaded'); ph.style.display='none'; };
-              } else {
-                ph.innerHTML = '🌿<span class="retry-hint">Tap for photo</span>';
-                ph.classList.add('retryable');
-              }
-            });
-          };
-        }
-      }
-    });
+    const cached = imgCache[plant.scientific];
+    if (cached) {
+      // Already have the URL — show immediately
+      updateGridCard(plant, cached);
+    } else if (cached === '') {
+      // Previously failed — show retry tap
+      showCardRetry(plant);
+    } else {
+      // Not yet fetched — queue it
+      queueFetch(plant, url => {
+        if (!url) showCardRetry(plant);
+      });
+    }
   });
 }
 
+function showCardRetry(plant) {
+  const ph = document.getElementById(cardPhId(plant));
+  const img = document.getElementById(cardImgId(plant));
+  if (!ph) return;
+  ph.innerHTML = '🌿<span class="retry-hint">Tap for photo</span>';
+  ph.classList.add('retryable');
+  ph.onclick = (e) => {
+    e.stopPropagation();
+    ph.innerHTML = '🌿<span>Retrying…</span>';
+    ph.classList.remove('retryable');
+    ph.onclick = null;
+    delete imgCache[plant.scientific];
+    queueFetch(plant, url => {
+      if (url) {
+        updateGridCard(plant, url);
+      } else {
+        showCardRetry(plant);
+      }
+    });
+  };
+}
+
+// ── MODAL ────────────────────────────────────────────────────────────────────
 function closeModal() {
   document.getElementById('overlay').classList.remove('open');
   document.body.style.overflow = '';
@@ -476,7 +522,7 @@ function openModal(plant) {
   const modal = document.getElementById('modal');
   modal.innerHTML = `
     <div class="modal-handle"></div>
-    <div id="modal-img-area"><div class="modal-img-ph" id="modal-ph">🌿<span class="retry-hint">Tap to load photo</span></div></div>
+    <div id="modal-img-area"><div class="modal-img-ph" id="modal-ph">🌿<span class="retry-hint">Loading…</span></div></div>
     <button class="back-btn" onclick="closeModal()">← Back to All Plants</button>
     <div class="modal-body">
       <div class="modal-name">${plant.common}</div>
@@ -491,36 +537,48 @@ function openModal(plant) {
   document.getElementById('overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 
-  function loadModalImage() {
-    const ph = document.getElementById('modal-ph');
-    if (ph) { ph.innerHTML = '🌿<span class="retry-hint">Loading…</span>'; ph.onclick = null; }
-    queueFetch(plant, url => {
-      const area = document.getElementById('modal-img-area');
-      if (!area) return;
-      if (url) {
-        const img = document.createElement('img');
-        img.className = 'modal-img';
-        img.src = url;
-        img.alt = plant.common;
-        area.innerHTML = '';
-        area.appendChild(img);
-      } else {
-        // Allow retry tap on modal placeholder too
-        const ph2 = document.getElementById('modal-ph');
-        if (ph2) {
-          ph2.innerHTML = '🌿<span class="retry-hint">Tap to retry photo</span>';
-          ph2.onclick = () => { delete imgCache[plant.scientific]; loadModalImage(); };
-        }
+  function showModalImage(url) {
+    const area = document.getElementById('modal-img-area');
+    if (!area) return;
+    if (url) {
+      const img = document.createElement('img');
+      img.className = 'modal-img';
+      img.src = url;
+      img.alt = plant.common;
+      area.innerHTML = '';
+      area.appendChild(img);
+      // Also sync back to grid card
+      updateGridCard(plant, url);
+    } else {
+      const ph2 = document.getElementById('modal-ph');
+      if (ph2) {
+        ph2.innerHTML = '🌿<span class="retry-hint">Tap to retry photo</span>';
+        ph2.onclick = () => {
+          delete imgCache[plant.scientific];
+          ph2.innerHTML = '🌿<span class="retry-hint">Loading…</span>';
+          ph2.onclick = null;
+          queueFetch(plant, showModalImage);
+        };
       }
-    });
+    }
   }
 
-  // If already cached as empty, show tap-to-load immediately; otherwise auto-load
-  if (imgCache[plant.scientific] === '') {
+  const cached = imgCache[plant.scientific];
+  if (cached) {
+    showModalImage(cached);
+  } else if (cached === '') {
     const ph = document.getElementById('modal-ph');
-    if (ph) ph.onclick = () => { delete imgCache[plant.scientific]; loadModalImage(); };
+    if (ph) {
+      ph.innerHTML = '🌿<span class="retry-hint">Tap to load photo</span>';
+      ph.onclick = () => {
+        delete imgCache[plant.scientific];
+        ph.innerHTML = '🌿<span class="retry-hint">Loading…</span>';
+        ph.onclick = null;
+        queueFetch(plant, showModalImage);
+      };
+    }
   } else {
-    loadModalImage();
+    queueFetch(plant, showModalImage);
   }
 }
 
