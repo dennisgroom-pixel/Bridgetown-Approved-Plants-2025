@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Bridgetown Approved Plants</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep: #1a3022;
+    --green-mid: #2d5a3d;
+    --gold: #c9a84c;
+    --cream: #f5f0e8;
+    --card-bg: #ffffff;
+    --border: #e0d8c8;
+    --muted: #666;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: #1a1a1a; min-height: 100vh; }
+
+  header { background: var(--green-deep); padding: 18px 16px 12px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
+  .header-top { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .header-top h1 { font-family: 'Playfair Display', serif; font-size: 20px; color: #f5f0e8; }
+  .header-top p { font-size: 11px; color: var(--gold); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; }
+  .search-wrap { position: relative; }
+  .search-wrap input { width: 100%; padding: 10px 14px 10px 36px; border-radius: 10px; border: none; background: rgba(255,255,255,0.13); color: #fff; font-size: 15px; outline: none; font-family: 'DM Sans', sans-serif; }
+  .search-wrap input::placeholder { color: rgba(255,255,255,0.45); }
+  .search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); font-size: 14px; opacity: 0.5; }
+
+  .filter-bar { display: flex; gap: 6px; padding: 10px 16px; overflow-x: auto; background: var(--green-mid); scrollbar-width: none; }
+  .filter-bar::-webkit-scrollbar { display: none; }
+  .filter-btn { flex-shrink: 0; padding: 5px 13px; border-radius: 20px; border: 1.5px solid rgba(255,255,255,0.25); background: transparent; color: rgba(255,255,255,0.8); font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+  .filter-btn.active { background: var(--gold); border-color: var(--gold); color: var(--green-deep); font-weight: 700; }
+
+  .stats-bar { padding: 9px 16px; font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
+  .stats-bar strong { color: var(--green-mid); }
+
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 12px; }
+  @media (min-width: 600px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 900px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+
+  .card { background: var(--card-bg); border-radius: 14px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.07); transition: transform 0.15s; }
+  .card:active { transform: scale(0.97); }
+
+  .card-img { position: relative; width: 100%; padding-top: 100%; background: #d8e8dc; }
+  .card-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.4s; }
+  .card-img img.loaded { opacity: 1; }
+  .placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 28px; color: #4a8c5c; gap: 4px; }
+  .placeholder span { font-size: 10px; color: #999; }
+
+  .card-body { padding: 10px 12px 12px; }
+  .card-common { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; color: var(--green-deep); line-height: 1.3; margin-bottom: 3px; }
+  .card-sci { font-size: 11px; font-style: italic; color: var(--muted); margin-bottom: 7px; }
+  .badge { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; background: #1a1a1a; color: #fff; }
+
+  /* Modal */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1000; display: flex; align-items: flex-end; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal { background: #fff; width: 100%; max-height: 88vh; border-radius: 24px 24px 0 0; overflow-y: auto; transform: translateY(40px); transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal-handle { width: 40px; height: 4px; background: #ddd; border-radius: 2px; margin: 14px auto 0; }
+  .modal-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; margin-top: 12px; background: #d8e8dc; }
+  .modal-img-ph { width: 100%; aspect-ratio: 16/9; background: #d8e8dc; display: flex; align-items: center; justify-content: center; font-size: 56px; margin-top: 12px; }
+  .modal-body { padding: 20px 20px 40px; }
+  .modal-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--green-deep); margin-bottom: 4px; }
+  .modal-sci { font-style: italic; color: var(--muted); font-size: 15px; margin-bottom: 14px; }
+  .modal-meta { margin-bottom: 20px; }
+  .info-row { display: flex; gap: 12px; padding: 11px 0; border-bottom: 1px solid #f0ece4; font-size: 14px; }
+  .info-row:last-child { border-bottom: none; }
+  .info-label { font-weight: 700; color: var(--green-mid); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; width: 110px; flex-shrink: 0; padding-top: 1px; }
+  .info-val { color: #333; }
+  .info-val.approved { color: var(--green-mid); font-weight: 700; }
+  .modal-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 50%; background: rgba(0,0,0,0.2); border: none; color: #fff; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .modal-credit { font-size: 10px; color: #bbb; text-align: right; padding: 4px 20px 0; }
+
+  .no-results { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--muted); }
+  .no-results .big { font-size: 48px; margin-bottom: 12px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <span style="font-size:26px">🌿</span>
+    <div>
+      <h1>Bridgetown Plants</h1>
+      <p>2025 Approved Plant List</p>
+    </div>
+  </div>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search by name…" autocomplete="off">
+  </div>
+</header>
+
+<div class="filter-bar" id="filterBar"></div>
+
+<div class="stats-bar">
+  <div>Showing <strong id="countDisplay">0</strong> plants</div>
+  <div id="catDisplay"></div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="modal-overlay" id="overlay">
+  <div style="position:relative;width:100%">
+    <div class="modal" id="modal"></div>
+  </div>
+</div>
+
+<script>
+const PLANTS = [
+  // Annuals & Perennials
+  {common:"African Iris",scientific:"Dietes iridioides",category:"Perennial"},
+  {common:"Ageratum",scientific:"Ageratum houstonianum",category:"Annual"},
+  {common:"Aloe",scientific:"Aloe vera",category:"Perennial"},
+  {common:"Amaranth",scientific:"Amaranthus tricolor",category:"Annual"},
+  {common:"Amaryllis",scientific:"Hippeastrum hybridum",category:"Annual / Perennial"},
+  {common:"Angelonia",scientific:"Angelonia angustifolia",category:"Annual / Perennial"},
+  {common:"Autumn Fern",scientific:"Dryopteris erythrosora",category:"Perennial"},
+  {common:"Aztec Lily",scientific:"Sprekelia formosissima",category:"Perennial"},
+  {common:"Blackberry Lily",scientific:"Iris domestica",category:"Perennial"},
+  {common:"Blanket Flower",scientific:"Gaillardia pulchella",category:"Perennial"},
+  {common:"Blazing Star",scientific:"Liatris spicata",category:"Perennial"},
+  {common:"Blood Lily",scientific:"Scadoxus multiflorus",category:"Perennial"},
+  {common:"Blue Daze",scientific:"Evolvulus glomeratus",category:"Perennial"},
+  {common:"Blue Flag Iris",scientific:"Iris virginica",category:"Perennial"},
+  {common:"Blue Phlox",scientific:"Phlox divaricata",category:"Perennial"},
+  {common:"Bracken Fern",scientific:"Pteridium aquilinum",category:"Perennial"},
+  {common:"Bromeliads",scientific:"Aechmea fasciata",category:"Perennial"},
+  {common:"Butterfly Lily",scientific:"Hedychium coronarium",category:"Annual / Perennial"},
+  {common:"Caladium",scientific:"Caladium bicolor",category:"Annual / Perennial"},
+  {common:"Canna Lily",scientific:"Canna indica",category:"Annual"},
+  {common:"Celosia",scientific:"Celosia argentea",category:"Annual"},
+  {common:"Cinnamon Fern",scientific:"Osmundastrum cinnamomeum",category:"Annual / Perennial"},
+  {common:"Coleus",scientific:"Plectranthus scutellarioides",category:"Annual / Perennial"},
+  {common:"Curcuma",scientific:"Curcuma longa",category:"Perennial"},
+  {common:"Daisy Bush",scientific:"Euryops pectinatus",category:"Perennial"},
+  {common:"Dune Sunflower",scientific:"Helianthus debilis",category:"Perennial"},
+  {common:"Elephant Ears",scientific:"Alocasia macrorrhiza",category:"Perennial"},
+  {common:"Firecracker Flower",scientific:"Crossandra infundibuliformis",category:"Perennial"},
+  {common:"Firespike",scientific:"Odontonema strictum",category:"Perennial"},
+  {common:"Flax Lily",scientific:"Dianella tasmanica",category:"Annual / Perennial"},
+  {common:"Gazania",scientific:"Gazania rigens",category:"Annual"},
+  {common:"Gloriosa Lily",scientific:"Gloriosa superba",category:"Annual / Perennial"},
+  {common:"Golden Shrimp Plant",scientific:"Pachystachys lutea",category:"Perennial"},
+  {common:"Goldenrod",scientific:"Solidago canadensis",category:"Annual / Perennial"},
+  {common:"Impatiens",scientific:"Impatiens walleriana",category:"Annual / Perennial"},
+  {common:"Jacobinia",scientific:"Justicia carnea",category:"Perennial"},
+  {common:"Kalanchoe",scientific:"Kalanchoe blossfeldiana",category:"Annual / Perennial"},
+  {common:"Lily of the Nile",scientific:"Agapanthus africanus",category:"Perennial"},
+  {common:"Lion's Ear",scientific:"Leonotis leonurus",category:"Perennial"},
+  {common:"Louisiana Iris",scientific:"Iris hexagona",category:"Perennial"},
+  {common:"Marigold",scientific:"Tagetes erecta",category:"Annual"},
+  {common:"Mexican Heather",scientific:"Cuphea hyssopifolia",category:"Annual / Perennial"},
+  {common:"Milkweed",scientific:"Asclepias tuberosa",category:"Annual / Perennial"},
+  {common:"Pansy",scientific:"Viola tricolor",category:"Perennial"},
+  {common:"Peacock Ginger",scientific:"Kaempferia pulchra",category:"Annual / Perennial"},
+  {common:"Pentas",scientific:"Pentas lanceolata",category:"Annual / Perennial"},
+  {common:"Periwinkle",scientific:"Catharanthus roseus",category:"Annual"},
+  {common:"Petunia",scientific:"Petunia hybrida",category:"Annual"},
+  {common:"Philodendron",scientific:"Philodendron hederaceum",category:"Perennial"},
+  {common:"Pine Cone Ginger",scientific:"Zingiber zerumbet",category:"Perennial"},
+  {common:"Plectranthus",scientific:"Plectranthus amboinicus",category:"Perennial"},
+  {common:"Porterweed",scientific:"Stachytarpheta jamaicensis",category:"Annual"},
+  {common:"Pot Marigold",scientific:"Calendula officinalis",category:"Annual"},
+  {common:"Powderpuff",scientific:"Mimosa strigillosa",category:"Perennial"},
+  {common:"Purple Coneflower",scientific:"Echinacea purpurea",category:"Perennial"},
+  {common:"Rain Lily",scientific:"Zephyranthes grandiflora",category:"Perennial"},
+  {common:"Royal Fern",scientific:"Osmunda regalis",category:"Perennial"},
+  {common:"Salvia",scientific:"Salvia splendens",category:"Perennial"},
+  {common:"Shell Ginger",scientific:"Alpinia zerumbet",category:"Annual / Perennial"},
+  {common:"Shrimp Plant",scientific:"Justicia brandegeeana",category:"Perennial"},
+  {common:"Society Garlic",scientific:"Tulbaghia violacea",category:"Perennial"},
+  {common:"Southern Maidenhair Fern",scientific:"Adiantum capillus-veneris",category:"Perennial"},
+  {common:"Spider Lily",scientific:"Hymenocallis littoralis",category:"Perennial"},
+  {common:"Spiral Ginger",scientific:"Costus speciosus",category:"Perennial"},
+  {common:"Sweet Alyssum",scientific:"Lobularia maritima",category:"Annual"},
+  {common:"Tickseed",scientific:"Coreopsis lanceolata",category:"Perennial"},
+  {common:"Twin Flower",scientific:"Dyschoriste oblongifolia",category:"Perennial"},
+  {common:"Voodoo Lily",scientific:"Amorphophallus konjac",category:"Perennial"},
+  {common:"Walking Iris",scientific:"Neomarica gracilis",category:"Annual / Perennial"},
+  {common:"Wax Begonia",scientific:"Begonia semperflorens",category:"Annual / Perennial"},
+  {common:"Wishbone Flower",scientific:"Torenia fournieri",category:"Annual"},
+  {common:"Zinnia",scientific:"Zinnia elegans",category:"Annual"},
+  // Grasses
+  {common:"Cordgrass",scientific:"Spartina alterniflora",category:"Grass"},
+  {common:"Dwarf Fakahatchee Grass",scientific:"Tripsacum dactyloides",category:"Grass"},
+  {common:"Elliott's Lovegrass",scientific:"Eragrostis elliottii",category:"Grass"},
+  {common:"Lemongrass",scientific:"Cymbopogon citratus",category:"Grass"},
+  {common:"Miscanthus",scientific:"Miscanthus sinensis",category:"Grass"},
+  {common:"Muhly Grass",scientific:"Muhlenbergia capillaris",category:"Grass"},
+  {common:"Panic Grass",scientific:"Panicum virgatum",category:"Grass"},
+  {common:"Purple Fountain Grass",scientific:"Pennisetum setaceum",category:"Grass"},
+  {common:"Purple Lovegrass",scientific:"Eragrostis spectabilis",category:"Grass"},
+  {common:"Salt Grass",scientific:"Distichlis spicata",category:"Grass"},
+  {common:"Wiregrass",scientific:"Aristida stricta",category:"Grass"},
+  // Ground Covers
+  {common:"Algerian Ivy",scientific:"Hedera canariensis",category:"Ground Cover"},
+  {common:"Blue Pacific Juniper",scientific:"Juniperus conferta",category:"Ground Cover"},
+  {common:"Confederate Jasmine",scientific:"Trachelospermum jasminoides",category:"Ground Cover"},
+  {common:"Foxtail Fern",scientific:"Asparagus densiflorus",category:"Ground Cover"},
+  {common:"Holly Fern",scientific:"Cyrtomium falcatum",category:"Ground Cover"},
+  {common:"Inkberry",scientific:"Scaevola plumieri",category:"Ground Cover"},
+  {common:"Juniper Parsonii",scientific:"Juniperus horizontalis",category:"Ground Cover"},
+  {common:"Leatherleaf Fern",scientific:"Rumohra adiantiformis",category:"Ground Cover"},
+  {common:"Mondo Grass",scientific:"Ophiopogon japonicus",category:"Ground Cover"},
+  {common:"Perennial Peanut",scientific:"Arachis glabrata",category:"Ground Cover"},
+  {common:"Small-Leaf Confederate Jasmine",scientific:"Trachelospermum asiaticum",category:"Ground Cover"},
+  {common:"St. Bernard's Lily",scientific:"Anthericum sanderii",category:"Ground Cover"},
+  // Palms
+  {common:"Alexander Palm",scientific:"Ptychosperma elegans",category:"Palm"},
+  {common:"Areca Palm",scientific:"Dypsis lutescens",category:"Palm"},
+  {common:"Bismark Palm",scientific:"Bismarckia nobilis",category:"Palm"},
+  {common:"Buccaneer Palm",scientific:"Pseudophoenix sargentii",category:"Palm"},
+  {common:"Christmas Palm",scientific:"Adonidia merrillii",category:"Palm"},
+  {common:"Coconut Palm",scientific:"Cocos nucifera",category:"Palm"},
+  {common:"Date Palm",scientific:"Phoenix dactylifera",category:"Palm"},
+  {common:"Dioon Palm",scientific:"Dioon edule",category:"Palm"},
+  {common:"Fan Palm",scientific:"Livistona chinensis",category:"Palm"},
+  {common:"Formosa Palm",scientific:"Arenga engleri",category:"Palm"},
+  {common:"Foxtail Palm",scientific:"Wodyetia bifurcata",category:"Palm"},
+  {common:"Lady Palm",scientific:"Rhapis excelsa",category:"Palm"},
+  {common:"Paurotis Palm",scientific:"Acoelorrhaphe wrightii",category:"Palm"},
+  {common:"Pindo Palm",scientific:"Butia capitata",category:"Palm"},
+  {common:"Ruffled Fan Palm",scientific:"Licuala grandis",category:"Palm"},
+  {common:"Sabal Palm",scientific:"Sabal palmetto",category:"Palm"},
+  {common:"Windmill Palm",scientific:"Trachycarpus fortunei",category:"Palm"},
+  {common:"Yellow Butterfly Palm",scientific:"Chrysalidocarpus lutescens",category:"Palm"},
+  // Shrubs
+  {common:"Azalea",scientific:"Rhododendron indicum",category:"Shrub"},
+  {common:"Beauty Berry",scientific:"Callicarpa americana",category:"Shrub"},
+  {common:"Bird-of-Paradise",scientific:"Strelitzia reginae",category:"Shrub"},
+  {common:"Bougainvillea",scientific:"Bougainvillea spectabilis",category:"Shrub"},
+  {common:"Bush Allamanda",scientific:"Allamanda schottii",category:"Shrub"},
+  {common:"Carolina Aster",scientific:"Symphyotrichum carolinianum",category:"Shrub"},
+  {common:"Cast Iron Plant",scientific:"Aspidistra elatior",category:"Shrub"},
+  {common:"Century Plant",scientific:"Agave americana",category:"Shrub"},
+  {common:"Chenille Plant",scientific:"Acalypha hispida",category:"Shrub"},
+  {common:"Cleyera",scientific:"Ternstroemia gymnanthera",category:"Shrub"},
+  {common:"Cocoplum",scientific:"Chrysobalanus icaco",category:"Shrub"},
+  {common:"Coontie",scientific:"Zamia integrifolia",category:"Shrub"},
+  {common:"Copperleaf",scientific:"Acalypha wilkesiana",category:"Shrub"},
+  {common:"Crape Jasmine",scientific:"Tabernaemontana divaricata",category:"Shrub"},
+  {common:"Crinum Lily",scientific:"Crinum asiaticum",category:"Shrub"},
+  {common:"Croton",scientific:"Codiaeum variegatum",category:"Shrub"},
+  {common:"Desert Rose",scientific:"Adenium obesum",category:"Shrub"},
+  {common:"Downy Jasmine",scientific:"Jasminum multiflorum",category:"Shrub"},
+  {common:"Firebush",scientific:"Hamelia patens",category:"Shrub"},
+  {common:"Firecracker Plant",scientific:"Russelia equisetiformis",category:"Shrub"},
+  {common:"Fortune's Mahonia",scientific:"Mahonia fortunei",category:"Shrub"},
+  {common:"Gardenia",scientific:"Gardenia jasminoides",category:"Shrub"},
+  {common:"Giant Yellow Shrimp Plant",scientific:"Barleria micans",category:"Shrub"},
+  {common:"Gold Mound / Golden Dewdrops",scientific:"Duranta erecta",category:"Shrub"},
+  {common:"Green Island Ficus",scientific:"Ficus microcarpa",category:"Shrub"},
+  {common:"Hibiscus",scientific:"Hibiscus rosa-sinensis",category:"Shrub"},
+  {common:"Holly - Burford",scientific:"Ilex cornuta",category:"Shrub"},
+  {common:"Holly - Miniature",scientific:"Malpighia coccigera",category:"Shrub"},
+  {common:"Holly - Yaupon",scientific:"Ilex vomitoria",category:"Shrub"},
+  {common:"Ixora",scientific:"Ixora coccinea",category:"Shrub"},
+  {common:"Japanese Silvergrass",scientific:"Miscanthus sinensis",category:"Shrub"},
+  {common:"King's Mantle",scientific:"Thunbergia erecta",category:"Shrub"},
+  {common:"Loropetalum",scientific:"Loropetalum chinense",category:"Shrub"},
+  {common:"Natal-Plum",scientific:"Carissa macrocarpa",category:"Shrub"},
+  {common:"Oleander",scientific:"Nerium oleander",category:"Shrub"},
+  {common:"Peregrina",scientific:"Jatropha integerrima",category:"Shrub"},
+  {common:"Pittosporum",scientific:"Pittosporum tobira",category:"Shrub"},
+  {common:"Plumbago",scientific:"Plumbago auriculata",category:"Shrub"},
+  {common:"Podocarpus",scientific:"Podocarpus macrophyllus",category:"Shrub"},
+  {common:"Red Powderpuff",scientific:"Calliandra haematocephala",category:"Shrub"},
+  {common:"Rose",scientific:"Rosa chinensis",category:"Shrub"},
+  {common:"Rosemary",scientific:"Salvia rosmarinus",category:"Shrub"},
+  {common:"Rusty Lyonia",scientific:"Lyonia ferruginea",category:"Shrub"},
+  {common:"Sandankwa Viburnum",scientific:"Viburnum suspensum",category:"Shrub"},
+  {common:"Schefflera",scientific:"Schefflera arboricola",category:"Shrub"},
+  {common:"Selloum / Tree Philodendron",scientific:"Philodendron selloum",category:"Shrub"},
+  {common:"Simpson's Stopper",scientific:"Myrcianthes fragrans",category:"Shrub"},
+  {common:"Star Jasmine",scientific:"Jasminum nitidum",category:"Shrub"},
+  {common:"Sweet Almond Bush",scientific:"Aloysia virgata",category:"Shrub"},
+  {common:"Texas Sage",scientific:"Leucophyllum frutescens",category:"Shrub"},
+  {common:"Thryallis",scientific:"Galphimia glauca",category:"Shrub"},
+  {common:"Ti Plant",scientific:"Cordyline fruticosa",category:"Shrub"},
+  {common:"Titi",scientific:"Cyrilla racemiflora",category:"Shrub"},
+  {common:"Wax Jasmine",scientific:"Jasminum volubile",category:"Shrub"},
+  {common:"Weeping Fern Pine",scientific:"Podocarpus gracilior",category:"Shrub"},
+  {common:"Weeping Lantana",scientific:"Lantana depressa",category:"Shrub"},
+  {common:"White Bird-of-Paradise",scientific:"Strelitzia nicolai",category:"Shrub"},
+  {common:"Wild Coffee",scientific:"Psychotria nervosa",category:"Shrub"},
+  {common:"Yesterday-Today-Tomorrow",scientific:"Brunfelsia grandiflora",category:"Shrub"},
+  {common:"Yellow Shrimp Plant",scientific:"Barleria micans",category:"Shrub"},
+  {common:"Yucca",scientific:"Yucca filamentosa",category:"Shrub"},
+  // Trees
+  {common:"Bottlebrush",scientific:"Callistemon viminalis",category:"Tree"},
+  {common:"Buttonwood",scientific:"Conocarpus erectus",category:"Tree"},
+  {common:"Crape Myrtle",scientific:"Lagerstroemia indica",category:"Tree"},
+  {common:"Elderberry",scientific:"Sambucus canadensis",category:"Tree"},
+  {common:"Fiddlewood",scientific:"Citharexylum spinosum",category:"Tree"},
+  {common:"Florida Privet",scientific:"Forestiera segregata",category:"Tree"},
+  {common:"Frangipani",scientific:"Plumeria rubra",category:"Tree"},
+  {common:"Geiger Tree",scientific:"Cordia sebestena",category:"Tree"},
+  {common:"Holly - Dahoon",scientific:"Ilex cassine",category:"Tree"},
+  {common:"Holly - East Palatka",scientific:"Ilex x attenuata",category:"Tree"},
+  {common:"Hong Kong Orchid Tree",scientific:"Bauhinia blakeana",category:"Tree"},
+  {common:"Jamaica Caper",scientific:"Capparis cynophallophora",category:"Tree"},
+  {common:"Little Gem Magnolia",scientific:"Magnolia grandiflora",category:"Tree"},
+  {common:"Necklace Pod",scientific:"Sophora tomentosa",category:"Tree"},
+  {common:"Poinciana",scientific:"Caesalpinia pulcherrima",category:"Tree"},
+  {common:"Seagrape",scientific:"Coccoloba uvifera",category:"Tree"},
+  {common:"Silver Buttonwood",scientific:"Conocarpus erectus sericeus",category:"Tree"},
+  {common:"Stoppers",scientific:"Eugenia spp.",category:"Tree"},
+  {common:"Swamp Dogwood",scientific:"Cornus foemina",category:"Tree"},
+  {common:"Sweet Acacia",scientific:"Vachellia farnesiana",category:"Tree"},
+  {common:"Sweet Viburnum",scientific:"Viburnum odoratissimum",category:"Tree"},
+  {common:"Tabebuia",scientific:"Tabebuia heterophylla",category:"Tree"},
+  {common:"Walter's Viburnum",scientific:"Viburnum obovatum",category:"Tree"},
+  {common:"White Geiger",scientific:"Cordia boissieri",category:"Tree"},
+  {common:"Ylang Ylang",scientific:"Cananga odorata",category:"Tree"},
+];
+
+const CATS = ['All','Annual','Perennial','Annual / Perennial','Grass','Ground Cover','Palm','Shrub','Tree'];
+const imgCache = {};
+let activeFilter = 'All';
+let searchQuery = '';
+let currentPlant = null;
+
+// Build filter bar
+const filterBar = document.getElementById('filterBar');
+CATS.forEach(cat => {
+  const btn = document.createElement('button');
+  btn.className = 'filter-btn' + (cat === 'All' ? ' active' : '');
+  btn.textContent = cat;
+  btn.onclick = () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = cat;
+    renderGrid();
+  };
+  filterBar.appendChild(btn);
+});
+
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchQuery = e.target.value;
+  renderGrid();
+});
+
+function filtered() {
+  return PLANTS.filter(p => {
+    const matchCat = activeFilter === 'All' || p.category === activeFilter;
+    const q = searchQuery.toLowerCase();
+    return matchCat && (!q || p.common.toLowerCase().includes(q) || p.scientific.toLowerCase().includes(q));
+  });
+}
+
+// Rate-limited image fetch queue
+const fetchQueue = [];
+let activeFetches = 0;
+const MAX_CONCURRENT = 3;
+const FETCH_DELAY = 300; // ms between fetches
+
+function queueFetch(plant, callback) {
+  fetchQueue.push({plant, callback});
+  processQueue();
+}
+
+function processQueue() {
+  if (activeFetches >= MAX_CONCURRENT || fetchQueue.length === 0) return;
+  const {plant, callback} = fetchQueue.shift();
+  activeFetches++;
+  const key = plant.scientific;
+  if (imgCache[key] !== undefined) {
+    activeFetches--;
+    callback(imgCache[key]);
+    setTimeout(processQueue, 0);
+    return;
+  }
+  const q = plant.scientific.split(' ').slice(0,2).join(' ');
+  fetch(`https://api.inaturalist.org/v1/taxa?q=${encodeURIComponent(q)}&per_page=1&locale=en`)
+    .then(r => r.json())
+    .then(d => {
+      const url = d.results?.[0]?.default_photo?.medium_url || '';
+      imgCache[key] = url;
+      callback(url);
+    })
+    .catch(() => { imgCache[key] = ''; callback(''); })
+    .finally(() => {
+      activeFetches--;
+      setTimeout(processQueue, FETCH_DELAY);
+    });
+}
+
+function renderGrid() {
+  const plants = filtered();
+  const grid = document.getElementById('grid');
+  document.getElementById('countDisplay').textContent = plants.length;
+  document.getElementById('catDisplay').textContent = activeFilter !== 'All' ? activeFilter : 'All categories';
+  grid.innerHTML = '';
+
+  if (plants.length === 0) {
+    grid.innerHTML = `<div class="no-results"><div class="big">🌱</div><p>No plants found.</p></div>`;
+    return;
+  }
+
+  plants.forEach((plant, i) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    const uid = `c${i}${Date.now()}`;
+    card.innerHTML = `
+      <div class="card-img">
+        <div class="placeholder" id="ph-${uid}">🌿<span>Loading…</span></div>
+        <img id="img-${uid}" alt="${plant.common}">
+      </div>
+      <div class="card-body">
+        <div class="card-common">${plant.common}</div>
+        <div class="card-sci">${plant.scientific}</div>
+        <span class="badge">${plant.category}</span>
+      </div>`;
+    card.onclick = () => openModal(plant);
+    grid.appendChild(card);
+
+    queueFetch(plant, url => {
+      const img = document.getElementById(`img-${uid}`);
+      const ph = document.getElementById(`ph-${uid}`);
+      if (!img) return;
+      if (url) {
+        img.src = url;
+        img.onload = () => { img.classList.add('loaded'); if(ph) ph.style.display='none'; };
+      } else {
+        if (ph) ph.querySelector('span').textContent = 'No photo';
+      }
+    });
+  });
+}
+
+function openModal(plant) {
+  currentPlant = plant;
+  const modal = document.getElementById('modal');
+  modal.innerHTML = `
+    <div class="modal-handle"></div>
+    <div id="modal-img-area"><div class="modal-img-ph">🌿</div></div>
+    <div class="modal-body">
+      <div class="modal-name">${plant.common}</div>
+      <div class="modal-sci">${plant.scientific}</div>
+      <div class="modal-meta"><span class="badge">${plant.category}</span></div>
+      <div class="info-row"><span class="info-label">Common Name</span><span class="info-val">${plant.common}</span></div>
+      <div class="info-row"><span class="info-label">Scientific</span><span class="info-val"><em>${plant.scientific}</em></span></div>
+      <div class="info-row"><span class="info-label">Category</span><span class="info-val">${plant.category}</span></div>
+      <div class="info-row"><span class="info-label">HOA Status</span><span class="info-val approved">✓ Approved for Bridgetown</span></div>
+    </div>
+    <div class="modal-credit">Photos © iNaturalist contributors (CC BY-NC)</div>`;
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  queueFetch(plant, url => {
+    const area = document.getElementById('modal-img-area');
+    if (area && url) {
+      const img = document.createElement('img');
+      img.className = 'modal-img';
+      img.src = url;
+      img.alt = plant.common;
+      area.innerHTML = '';
+      area.appendChild(img);
+    }
+  });
+}
+
+document.getElementById('overlay').addEventListener('click', function(e) {
+  if (e.target === this) {
+    this.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+});
+
+renderGrid();
+</script>
+</body>
+</html>
