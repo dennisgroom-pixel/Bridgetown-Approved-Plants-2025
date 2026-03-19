@@ -60,7 +60,6 @@
   .modal-overlay.open .modal { transform: translateY(0); }
   .modal-handle { width: 40px; height: 4px; background: #ddd; border-radius: 2px; margin: 14px auto 0; }
   .modal-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; margin-top: 12px; background: #d8e8dc; }
-  .modal-img-ph { width: 100%; aspect-ratio: 16/9; background: #d8e8dc; display: flex; align-items: center; justify-content: center; font-size: 56px; margin-top: 12px; }
   .modal-body { padding: 20px 20px 40px; }
   .modal-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--green-deep); margin-bottom: 4px; }
   .modal-sci { font-style: italic; color: var(--muted); font-size: 15px; margin-bottom: 14px; }
@@ -71,7 +70,17 @@
   .info-val { color: #333; }
   .info-val.approved { color: var(--green-mid); font-weight: 700; }
   .modal-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 50%; background: rgba(0,0,0,0.2); border: none; color: #fff; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-  .modal-credit { font-size: 10px; color: #bbb; text-align: right; padding: 4px 20px 0; }
+  .modal-credit { font-size: 11px; color: #888; text-align: center; padding: 8px 20px 4px; }
+  .modal-credit a { color: #2d5a3d; font-weight: 600; text-decoration: underline; }
+  .page-footer { text-align: center; padding: 24px 20px 40px; font-size: 12px; color: #888; border-top: 1px solid var(--border); margin-top: 8px; line-height: 1.9; }
+  .page-footer a { color: var(--green-mid); font-weight: 600; text-decoration: underline; }
+  .back-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--green-deep); color: #fff; border: none; border-radius: 12px; padding: 14px 20px; font-size: 16px; font-weight: 700; cursor: pointer; width: calc(100% - 40px); margin: 16px 20px 8px; font-family: 'DM Sans', sans-serif; letter-spacing: 0.3px; }
+  .back-btn:active { opacity: 0.8; }
+  .placeholder.retryable { cursor: pointer; }
+  .placeholder.retryable:hover { background: rgba(0,0,0,0.03); }
+  .retry-hint { font-size: 10px; color: #2d5a3d; font-weight: 600; }
+  .modal-img-ph { width: 100%; aspect-ratio: 16/9; background: #d8e8dc; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-size: 48px; margin-top: 12px; cursor: pointer; }
+  .modal-img-ph .retry-hint { font-size: 14px; color: #2d5a3d; font-weight: 600; }
 
   .no-results { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--muted); }
   .no-results .big { font-size: 48px; margin-bottom: 12px; }
@@ -101,6 +110,12 @@
 </div>
 
 <div class="grid" id="grid"></div>
+
+<footer class="page-footer">
+  📷 Plant photos sourced from <a href="https://www.inaturalist.org" target="_blank">iNaturalist.org</a><br>
+  Photos © individual contributors, licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a><br>
+  Plant list © Bridgetown HOA — 2025 Approved Plant List
+</footer>
 
 <div class="modal-overlay" id="overlay">
   <div style="position:relative;width:100%">
@@ -425,10 +440,35 @@ function renderGrid() {
         img.src = url;
         img.onload = () => { img.classList.add('loaded'); if(ph) ph.style.display='none'; };
       } else {
-        if (ph) ph.querySelector('span').textContent = 'No photo';
+        // No photo found — make placeholder clickable to retry
+        if (ph) {
+          ph.querySelector('span').textContent = 'Tap to retry';
+          ph.classList.add('retryable');
+          ph.innerHTML = '🌿<span class="retry-hint">Tap for photo</span>';
+          ph.onclick = (e) => {
+            e.stopPropagation();
+            ph.innerHTML = '🌿<span>Retrying…</span>';
+            ph.classList.remove('retryable');
+            delete imgCache[plant.scientific];
+            queueFetch(plant, retryUrl => {
+              if (retryUrl) {
+                img.src = retryUrl;
+                img.onload = () => { img.classList.add('loaded'); ph.style.display='none'; };
+              } else {
+                ph.innerHTML = '🌿<span class="retry-hint">Tap for photo</span>';
+                ph.classList.add('retryable');
+              }
+            });
+          };
+        }
       }
     });
   });
+}
+
+function closeModal() {
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow = '';
 }
 
 function openModal(plant) {
@@ -436,7 +476,8 @@ function openModal(plant) {
   const modal = document.getElementById('modal');
   modal.innerHTML = `
     <div class="modal-handle"></div>
-    <div id="modal-img-area"><div class="modal-img-ph">🌿</div></div>
+    <div id="modal-img-area"><div class="modal-img-ph" id="modal-ph">🌿<span class="retry-hint">Tap to load photo</span></div></div>
+    <button class="back-btn" onclick="closeModal()">← Back to All Plants</button>
     <div class="modal-body">
       <div class="modal-name">${plant.common}</div>
       <div class="modal-sci">${plant.scientific}</div>
@@ -446,28 +487,45 @@ function openModal(plant) {
       <div class="info-row"><span class="info-label">Category</span><span class="info-val">${plant.category}</span></div>
       <div class="info-row"><span class="info-label">HOA Status</span><span class="info-val approved">✓ Approved for Bridgetown</span></div>
     </div>
-    <div class="modal-credit">Photos © iNaturalist contributors (CC BY-NC)</div>`;
+    <div class="modal-credit">📷 Photo sourced from <a href="https://www.inaturalist.org" target="_blank">iNaturalist.org</a> — © respective contributors (CC BY-NC)</div>`;
   document.getElementById('overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 
-  queueFetch(plant, url => {
-    const area = document.getElementById('modal-img-area');
-    if (area && url) {
-      const img = document.createElement('img');
-      img.className = 'modal-img';
-      img.src = url;
-      img.alt = plant.common;
-      area.innerHTML = '';
-      area.appendChild(img);
-    }
-  });
+  function loadModalImage() {
+    const ph = document.getElementById('modal-ph');
+    if (ph) { ph.innerHTML = '🌿<span class="retry-hint">Loading…</span>'; ph.onclick = null; }
+    queueFetch(plant, url => {
+      const area = document.getElementById('modal-img-area');
+      if (!area) return;
+      if (url) {
+        const img = document.createElement('img');
+        img.className = 'modal-img';
+        img.src = url;
+        img.alt = plant.common;
+        area.innerHTML = '';
+        area.appendChild(img);
+      } else {
+        // Allow retry tap on modal placeholder too
+        const ph2 = document.getElementById('modal-ph');
+        if (ph2) {
+          ph2.innerHTML = '🌿<span class="retry-hint">Tap to retry photo</span>';
+          ph2.onclick = () => { delete imgCache[plant.scientific]; loadModalImage(); };
+        }
+      }
+    });
+  }
+
+  // If already cached as empty, show tap-to-load immediately; otherwise auto-load
+  if (imgCache[plant.scientific] === '') {
+    const ph = document.getElementById('modal-ph');
+    if (ph) ph.onclick = () => { delete imgCache[plant.scientific]; loadModalImage(); };
+  } else {
+    loadModalImage();
+  }
 }
 
 document.getElementById('overlay').addEventListener('click', function(e) {
-  if (e.target === this) {
-    this.classList.remove('open');
-    document.body.style.overflow = '';
-  }
+  if (e.target === this) closeModal();
 });
 
 renderGrid();
