@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -18,73 +19,75 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: #1a1a1a; min-height: 100vh; }
 
-  header { background: var(--green-deep); padding: 18px 16px 12px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
-  .header-top { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-  .header-top h1 { font-family: 'Playfair Display', serif; font-size: 20px; color: #f5f0e8; }
-  .header-top p { font-size: 11px; color: var(--gold); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; }
-  .search-wrap { position: relative; }
-  .search-wrap input { width: 100%; padding: 10px 14px 10px 36px; border-radius: 10px; border: none; background: rgba(255,255,255,0.13); color: #fff; font-size: 15px; outline: none; font-family: 'DM Sans', sans-serif; }
-  .search-wrap input::placeholder { color: rgba(255,255,255,0.45); }
-  .search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); font-size: 14px; opacity: 0.5; }
+header { background: var(–green-deep); padding: 18px 16px 12px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
+.header-top { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.header-top h1 { font-family: ‘Playfair Display’, serif; font-size: 20px; color: #f5f0e8; }
+.header-top p { font-size: 11px; color: var(–gold); letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; }
+.search-wrap { position: relative; }
+.search-wrap input { width: 100%; padding: 10px 14px 10px 36px; border-radius: 10px; border: none; background: rgba(255,255,255,0.13); color: #fff; font-size: 15px; outline: none; font-family: ‘DM Sans’, sans-serif; }
+.search-wrap input::placeholder { color: rgba(255,255,255,0.45); }
+.search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); font-size: 14px; opacity: 0.5; }
 
-  .filter-bar { display: flex; gap: 6px; padding: 10px 16px; overflow-x: auto; background: var(--green-mid); scrollbar-width: none; }
-  .filter-bar::-webkit-scrollbar { display: none; }
-  .filter-btn { flex-shrink: 0; padding: 5px 13px; border-radius: 20px; border: 1.5px solid rgba(255,255,255,0.25); background: transparent; color: rgba(255,255,255,0.8); font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
-  .filter-btn.active { background: var(--gold); border-color: var(--gold); color: var(--green-deep); font-weight: 700; }
+.filter-bar { display: flex; gap: 6px; padding: 10px 16px; overflow-x: auto; background: var(–green-mid); scrollbar-width: none; }
+.filter-bar::-webkit-scrollbar { display: none; }
+.filter-btn { flex-shrink: 0; padding: 5px 13px; border-radius: 20px; border: 1.5px solid rgba(255,255,255,0.25); background: transparent; color: rgba(255,255,255,0.8); font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.2s; font-family: ‘DM Sans’, sans-serif; }
+.filter-btn.active { background: var(–gold); border-color: var(–gold); color: var(–green-deep); font-weight: 700; }
 
-  .stats-bar { padding: 9px 16px; font-size: 12px; color: var(--muted); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
-  .stats-bar strong { color: var(--green-mid); }
+.stats-bar { padding: 9px 16px; font-size: 12px; color: var(–muted); border-bottom: 1px solid var(–border); display: flex; justify-content: space-between; }
+.stats-bar strong { color: var(–green-mid); }
 
-  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 12px; }
-  @media (min-width: 600px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-  @media (min-width: 900px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 12px; }
+@media (min-width: 600px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 900px) { .grid { grid-template-columns: repeat(4, 1fr); } }
 
-  .card { background: var(--card-bg); border-radius: 14px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.07); transition: transform 0.15s; }
-  .card:active { transform: scale(0.97); }
+.card { background: var(–card-bg); border-radius: 14px; overflow: hidden; border: 1px solid var(–border); cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.07); transition: transform 0.15s; }
+.card:active { transform: scale(0.97); }
 
-  .card-img { position: relative; width: 100%; padding-top: 100%; background: #d8e8dc; }
-  .card-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.4s; }
-  .card-img img.loaded { opacity: 1; }
-  .placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 28px; color: #4a8c5c; gap: 4px; }
-  .placeholder span { font-size: 10px; color: #999; }
+.card-img { position: relative; width: 100%; padding-top: 100%; background: #d8e8dc; }
+.card-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.4s; }
+.card-img img.loaded { opacity: 1; }
+.placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 28px; color: #4a8c5c; gap: 4px; }
+.placeholder span { font-size: 10px; color: #999; }
 
-  .card-body { padding: 10px 12px 12px; }
-  .card-common { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; color: var(--green-deep); line-height: 1.3; margin-bottom: 3px; }
-  .card-sci { font-size: 11px; font-style: italic; color: var(--muted); margin-bottom: 7px; }
-  .badge { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; background: #1a1a1a; color: #fff; }
+.card-body { padding: 10px 12px 12px; }
+.card-common { font-family: ‘Playfair Display’, serif; font-size: 14px; font-weight: 700; color: var(–green-deep); line-height: 1.3; margin-bottom: 3px; }
+.card-sci { font-size: 11px; font-style: italic; color: var(–muted); margin-bottom: 7px; }
+.badge { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; background: #1a1a1a; color: #fff; }
 
-  /* Modal */
-  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1000; display: flex; align-items: flex-end; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
-  .modal-overlay.open { opacity: 1; pointer-events: all; }
-  .modal { background: #fff; width: 100%; max-height: 88vh; border-radius: 24px 24px 0 0; overflow-y: auto; transform: translateY(40px); transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
-  .modal-overlay.open .modal { transform: translateY(0); }
-  .modal-handle { width: 40px; height: 4px; background: #ddd; border-radius: 2px; margin: 14px auto 0; }
-  .modal-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; margin-top: 12px; background: #d8e8dc; }
-  .modal-body { padding: 20px 20px 40px; }
-  .modal-name { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--green-deep); margin-bottom: 4px; }
-  .modal-sci { font-style: italic; color: var(--muted); font-size: 15px; margin-bottom: 14px; }
-  .modal-meta { margin-bottom: 20px; }
-  .info-row { display: flex; gap: 12px; padding: 11px 0; border-bottom: 1px solid #f0ece4; font-size: 14px; }
-  .info-row:last-child { border-bottom: none; }
-  .info-label { font-weight: 700; color: var(--green-mid); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; width: 110px; flex-shrink: 0; padding-top: 1px; }
-  .info-val { color: #333; }
-  .info-val.approved { color: var(--green-mid); font-weight: 700; }
-  .modal-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 50%; background: rgba(0,0,0,0.2); border: none; color: #fff; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-  .modal-credit { font-size: 11px; color: #888; text-align: center; padding: 8px 20px 4px; }
-  .modal-credit a { color: #2d5a3d; font-weight: 600; text-decoration: underline; }
-  .page-footer { text-align: center; padding: 24px 20px 40px; font-size: 12px; color: #888; border-top: 1px solid var(--border); margin-top: 8px; line-height: 1.9; }
-  .page-footer a { color: var(--green-mid); font-weight: 600; text-decoration: underline; }
-  .back-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--green-deep); color: #fff; border: none; border-radius: 12px; padding: 14px 20px; font-size: 16px; font-weight: 700; cursor: pointer; width: calc(100% - 40px); margin: 16px 20px 8px; font-family: 'DM Sans', sans-serif; letter-spacing: 0.3px; }
-  .back-btn:active { opacity: 0.8; }
-  .placeholder.retryable { cursor: pointer; }
-  .placeholder.retryable:hover { background: rgba(0,0,0,0.03); }
-  .retry-hint { font-size: 10px; color: #2d5a3d; font-weight: 600; }
-  .modal-img-ph { width: 100%; aspect-ratio: 16/9; background: #d8e8dc; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-size: 48px; margin-top: 12px; cursor: pointer; }
-  .modal-img-ph .retry-hint { font-size: 14px; color: #2d5a3d; font-weight: 600; }
+/* Modal */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1000; display: flex; align-items: flex-end; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal { background: #fff; width: 100%; max-height: 88vh; border-radius: 24px 24px 0 0; overflow-y: auto; transform: translateY(40px); transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+.modal-overlay.open .modal { transform: translateY(0); }
+.modal-handle { width: 40px; height: 4px; background: #ddd; border-radius: 2px; margin: 14px auto 0; }
+.modal-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; margin-top: 12px; background: #d8e8dc; }
+.modal-body { padding: 20px 20px 40px; }
+.modal-name { font-family: ‘Playfair Display’, serif; font-size: 26px; font-weight: 700; color: var(–green-deep); margin-bottom: 4px; }
+.modal-sci { font-style: italic; color: var(–muted); font-size: 15px; margin-bottom: 14px; }
+.modal-meta { margin-bottom: 20px; }
+.info-row { display: flex; gap: 12px; padding: 11px 0; border-bottom: 1px solid #f0ece4; font-size: 14px; }
+.info-row:last-child { border-bottom: none; }
+.info-label { font-weight: 700; color: var(–green-mid); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; width: 110px; flex-shrink: 0; padding-top: 1px; }
+.info-val { color: #333; line-height: 1.5; }
+.info-val.approved { color: var(–green-mid); font-weight: 700; }
+.tidbit { background: #f0f7f2; border-left: 3px solid var(–green-mid); border-radius: 0 8px 8px 0; padding: 10px 14px; margin: 16px 0 4px; font-size: 13px; color: #2d4a38; line-height: 1.6; font-style: italic; }
+.modal-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 50%; background: rgba(0,0,0,0.2); border: none; color: #fff; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.modal-credit { font-size: 11px; color: #888; text-align: center; padding: 8px 20px 4px; }
+.modal-credit a { color: #2d5a3d; font-weight: 600; text-decoration: underline; }
+.page-footer { text-align: center; padding: 24px 20px 40px; font-size: 12px; color: #888; border-top: 1px solid var(–border); margin-top: 8px; line-height: 1.9; }
+.page-footer a { color: var(–green-mid); font-weight: 600; text-decoration: underline; }
+.back-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(–green-deep); color: #fff; border: none; border-radius: 12px; padding: 14px 20px; font-size: 16px; font-weight: 700; cursor: pointer; width: calc(100% - 40px); margin: 16px 20px 8px; font-family: ‘DM Sans’, sans-serif; letter-spacing: 0.3px; }
+.back-btn:active { opacity: 0.8; }
+.placeholder.retryable { cursor: pointer; }
+.placeholder.retryable:hover { background: rgba(0,0,0,0.03); }
+.retry-hint { font-size: 10px; color: #2d5a3d; font-weight: 600; }
+.modal-img-ph { width: 100%; aspect-ratio: 16/9; background: #d8e8dc; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-size: 48px; margin-top: 12px; cursor: pointer; }
+.modal-img-ph .retry-hint { font-size: 14px; color: #2d5a3d; font-weight: 600; }
 
-  .no-results { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--muted); }
-  .no-results .big { font-size: 48px; margin-bottom: 12px; }
+.no-results { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(–muted); }
+.no-results .big { font-size: 48px; margin-bottom: 12px; }
 </style>
+
 </head>
 <body>
 
@@ -125,213 +128,212 @@
 
 <script>
 const PLANTS = [
-  // Annuals & Perennials
-  {common:"African Iris",scientific:"Dietes iridioides",category:"Perennial"},
-  {common:"Ageratum",scientific:"Ageratum houstonianum",category:"Annual"},
-  {common:"Aloe",scientific:"Aloe vera",category:"Perennial"},
-  {common:"Amaranth",scientific:"Amaranthus tricolor",category:"Annual"},
-  {common:"Amaryllis",scientific:"Hippeastrum hybridum",category:"Annual / Perennial"},
-  {common:"Angelonia",scientific:"Angelonia angustifolia",category:"Annual / Perennial"},
-  {common:"Autumn Fern",scientific:"Dryopteris erythrosora",category:"Perennial"},
-  {common:"Aztec Lily",scientific:"Sprekelia formosissima",category:"Perennial"},
-  {common:"Blackberry Lily",scientific:"Iris domestica",category:"Perennial"},
-  {common:"Blanket Flower",scientific:"Gaillardia pulchella",category:"Perennial"},
-  {common:"Blazing Star",scientific:"Liatris spicata",category:"Perennial"},
-  {common:"Blood Lily",scientific:"Scadoxus multiflorus",category:"Perennial"},
-  {common:"Blue Daze",scientific:"Evolvulus glomeratus",category:"Perennial"},
-  {common:"Blue Flag Iris",scientific:"Iris virginica",category:"Perennial"},
-  {common:"Blue Phlox",scientific:"Phlox divaricata",category:"Perennial"},
-  {common:"Bracken Fern",scientific:"Pteridium aquilinum",category:"Perennial"},
-  {common:"Bromeliads",scientific:"Aechmea fasciata",category:"Perennial"},
-  {common:"Butterfly Lily",scientific:"Hedychium coronarium",category:"Annual / Perennial"},
-  {common:"Caladium",scientific:"Caladium bicolor",category:"Annual / Perennial"},
-  {common:"Canna Lily",scientific:"Canna indica",category:"Annual"},
-  {common:"Celosia",scientific:"Celosia argentea",category:"Annual"},
-  {common:"Cinnamon Fern",scientific:"Osmundastrum cinnamomeum",category:"Annual / Perennial"},
-  {common:"Coleus",scientific:"Plectranthus scutellarioides",category:"Annual / Perennial"},
-  {common:"Curcuma",scientific:"Curcuma longa",category:"Perennial"},
-  {common:"Daisy Bush",scientific:"Euryops pectinatus",category:"Perennial"},
-  {common:"Dune Sunflower",scientific:"Helianthus debilis",category:"Perennial"},
-  {common:"Elephant Ears",scientific:"Alocasia macrorrhiza",category:"Perennial"},
-  {common:"Firecracker Flower",scientific:"Crossandra infundibuliformis",category:"Perennial"},
-  {common:"Firespike",scientific:"Odontonema strictum",category:"Perennial"},
-  {common:"Flax Lily",scientific:"Dianella tasmanica",category:"Annual / Perennial"},
-  {common:"Gazania",scientific:"Gazania rigens",category:"Annual"},
-  {common:"Gloriosa Lily",scientific:"Gloriosa superba",category:"Annual / Perennial"},
-  {common:"Golden Shrimp Plant",scientific:"Pachystachys lutea",category:"Perennial"},
-  {common:"Goldenrod",scientific:"Solidago canadensis",category:"Annual / Perennial"},
-  {common:"Impatiens",scientific:"Impatiens walleriana",category:"Annual / Perennial"},
-  {common:"Jacobinia",scientific:"Justicia carnea",category:"Perennial"},
-  {common:"Kalanchoe",scientific:"Kalanchoe blossfeldiana",category:"Annual / Perennial"},
-  {common:"Lily of the Nile",scientific:"Agapanthus africanus",category:"Perennial"},
-  {common:"Lion's Ear",scientific:"Leonotis leonurus",category:"Perennial"},
-  {common:"Louisiana Iris",scientific:"Iris hexagona",category:"Perennial"},
-  {common:"Marigold",scientific:"Tagetes erecta",category:"Annual"},
-  {common:"Mexican Heather",scientific:"Cuphea hyssopifolia",category:"Annual / Perennial"},
-  {common:"Milkweed",scientific:"Asclepias tuberosa",category:"Annual / Perennial"},
-  {common:"Pansy",scientific:"Viola tricolor",category:"Perennial"},
-  {common:"Peacock Ginger",scientific:"Kaempferia pulchra",category:"Annual / Perennial"},
-  {common:"Pentas",scientific:"Pentas lanceolata",category:"Annual / Perennial"},
-  {common:"Periwinkle",scientific:"Catharanthus roseus",category:"Annual"},
-  {common:"Petunia",scientific:"Petunia hybrida",category:"Annual"},
-  {common:"Philodendron",scientific:"Philodendron hederaceum",category:"Perennial"},
-  {common:"Pine Cone Ginger",scientific:"Zingiber zerumbet",category:"Perennial"},
-  {common:"Plectranthus",scientific:"Plectranthus amboinicus",category:"Perennial"},
-  {common:"Porterweed",scientific:"Stachytarpheta jamaicensis",category:"Annual"},
-  {common:"Pot Marigold",scientific:"Calendula officinalis",category:"Annual"},
-  {common:"Powderpuff",scientific:"Mimosa strigillosa",category:"Perennial"},
-  {common:"Purple Coneflower",scientific:"Echinacea purpurea",category:"Perennial"},
-  {common:"Rain Lily",scientific:"Zephyranthes grandiflora",category:"Perennial"},
-  {common:"Royal Fern",scientific:"Osmunda regalis",category:"Perennial"},
-  {common:"Salvia",scientific:"Salvia splendens",category:"Perennial"},
-  {common:"Shell Ginger",scientific:"Alpinia zerumbet",category:"Annual / Perennial"},
-  {common:"Shrimp Plant",scientific:"Justicia brandegeeana",category:"Perennial"},
-  {common:"Society Garlic",scientific:"Tulbaghia violacea",category:"Perennial"},
-  {common:"Southern Maidenhair Fern",scientific:"Adiantum capillus-veneris",category:"Perennial"},
-  {common:"Spider Lily",scientific:"Hymenocallis littoralis",category:"Perennial"},
-  {common:"Spiral Ginger",scientific:"Costus speciosus",category:"Perennial"},
-  {common:"Sweet Alyssum",scientific:"Lobularia maritima",category:"Annual"},
-  {common:"Tickseed",scientific:"Coreopsis lanceolata",category:"Perennial"},
-  {common:"Twin Flower",scientific:"Dyschoriste oblongifolia",category:"Perennial"},
-  {common:"Voodoo Lily",scientific:"Amorphophallus konjac",category:"Perennial"},
-  {common:"Walking Iris",scientific:"Neomarica gracilis",category:"Annual / Perennial"},
-  {common:"Wax Begonia",scientific:"Begonia semperflorens",category:"Annual / Perennial"},
-  {common:"Wishbone Flower",scientific:"Torenia fournieri",category:"Annual"},
-  {common:"Zinnia",scientific:"Zinnia elegans",category:"Annual"},
-  // Grasses
-  {common:"Cordgrass",scientific:"Spartina alterniflora",category:"Grass"},
-  {common:"Dwarf Fakahatchee Grass",scientific:"Tripsacum dactyloides",category:"Grass"},
-  {common:"Elliott's Lovegrass",scientific:"Eragrostis elliottii",category:"Grass"},
-  {common:"Lemongrass",scientific:"Cymbopogon citratus",category:"Grass"},
-  {common:"Miscanthus",scientific:"Miscanthus sinensis",category:"Grass"},
-  {common:"Muhly Grass",scientific:"Muhlenbergia capillaris",category:"Grass"},
-  {common:"Panic Grass",scientific:"Panicum virgatum",category:"Grass"},
-  {common:"Purple Fountain Grass",scientific:"Pennisetum setaceum",category:"Grass"},
-  {common:"Purple Lovegrass",scientific:"Eragrostis spectabilis",category:"Grass"},
-  {common:"Salt Grass",scientific:"Distichlis spicata",category:"Grass"},
-  {common:"Wiregrass",scientific:"Aristida stricta",category:"Grass"},
-  // Ground Covers
-  {common:"Algerian Ivy",scientific:"Hedera canariensis",category:"Ground Cover"},
-  {common:"Blue Pacific Juniper",scientific:"Juniperus conferta",category:"Ground Cover"},
-  {common:"Confederate Jasmine",scientific:"Trachelospermum jasminoides",category:"Ground Cover"},
-  {common:"Foxtail Fern",scientific:"Asparagus densiflorus",category:"Ground Cover"},
-  {common:"Holly Fern",scientific:"Cyrtomium falcatum",category:"Ground Cover"},
-  {common:"Inkberry",scientific:"Scaevola plumieri",category:"Ground Cover"},
-  {common:"Juniper Parsonii",scientific:"Juniperus horizontalis",category:"Ground Cover"},
-  {common:"Leatherleaf Fern",scientific:"Rumohra adiantiformis",category:"Ground Cover"},
-  {common:"Mondo Grass",scientific:"Ophiopogon japonicus",category:"Ground Cover"},
-  {common:"Perennial Peanut",scientific:"Arachis glabrata",category:"Ground Cover"},
-  {common:"Small-Leaf Confederate Jasmine",scientific:"Trachelospermum asiaticum",category:"Ground Cover"},
-  {common:"St. Bernard's Lily",scientific:"Anthericum sanderii",category:"Ground Cover"},
-  // Palms
-  {common:"Alexander Palm",scientific:"Ptychosperma elegans",category:"Palm"},
-  {common:"Areca Palm",scientific:"Dypsis lutescens",category:"Palm"},
-  {common:"Bismark Palm",scientific:"Bismarckia nobilis",category:"Palm"},
-  {common:"Buccaneer Palm",scientific:"Pseudophoenix sargentii",category:"Palm"},
-  {common:"Christmas Palm",scientific:"Adonidia merrillii",category:"Palm"},
-  {common:"Coconut Palm",scientific:"Cocos nucifera",category:"Palm"},
-  {common:"Date Palm",scientific:"Phoenix dactylifera",category:"Palm"},
-  {common:"Dioon Palm",scientific:"Dioon edule",category:"Palm"},
-  {common:"Fan Palm",scientific:"Livistona chinensis",category:"Palm"},
-  {common:"Formosa Palm",scientific:"Arenga engleri",category:"Palm"},
-  {common:"Foxtail Palm",scientific:"Wodyetia bifurcata",category:"Palm"},
-  {common:"Lady Palm",scientific:"Rhapis excelsa",category:"Palm"},
-  {common:"Paurotis Palm",scientific:"Acoelorrhaphe wrightii",category:"Palm"},
-  {common:"Pindo Palm",scientific:"Butia capitata",category:"Palm"},
-  {common:"Ruffled Fan Palm",scientific:"Licuala grandis",category:"Palm"},
-  {common:"Sabal Palm",scientific:"Sabal palmetto",category:"Palm"},
-  {common:"Windmill Palm",scientific:"Trachycarpus fortunei",category:"Palm"},
-  {common:"Yellow Butterfly Palm",scientific:"Chrysalidocarpus lutescens",category:"Palm"},
-  // Shrubs
-  {common:"Azalea",scientific:"Rhododendron indicum",category:"Shrub"},
-  {common:"Beauty Berry",scientific:"Callicarpa americana",category:"Shrub"},
-  {common:"Bird-of-Paradise",scientific:"Strelitzia reginae",category:"Shrub"},
-  {common:"Bougainvillea",scientific:"Bougainvillea spectabilis",category:"Shrub"},
-  {common:"Bush Allamanda",scientific:"Allamanda schottii",category:"Shrub"},
-  {common:"Carolina Aster",scientific:"Symphyotrichum carolinianum",category:"Shrub"},
-  {common:"Cast Iron Plant",scientific:"Aspidistra elatior",category:"Shrub"},
-  {common:"Century Plant",scientific:"Agave americana",category:"Shrub"},
-  {common:"Chenille Plant",scientific:"Acalypha hispida",category:"Shrub"},
-  {common:"Cleyera",scientific:"Ternstroemia gymnanthera",category:"Shrub"},
-  {common:"Cocoplum",scientific:"Chrysobalanus icaco",category:"Shrub"},
-  {common:"Coontie",scientific:"Zamia integrifolia",category:"Shrub"},
-  {common:"Copperleaf",scientific:"Acalypha wilkesiana",category:"Shrub"},
-  {common:"Crape Jasmine",scientific:"Tabernaemontana divaricata",category:"Shrub"},
-  {common:"Crinum Lily",scientific:"Crinum asiaticum",category:"Shrub"},
-  {common:"Croton",scientific:"Codiaeum variegatum",category:"Shrub"},
-  {common:"Desert Rose",scientific:"Adenium obesum",category:"Shrub"},
-  {common:"Downy Jasmine",scientific:"Jasminum multiflorum",category:"Shrub"},
-  {common:"Firebush",scientific:"Hamelia patens",category:"Shrub"},
-  {common:"Firecracker Plant",scientific:"Russelia equisetiformis",category:"Shrub"},
-  {common:"Fortune's Mahonia",scientific:"Mahonia fortunei",category:"Shrub"},
-  {common:"Gardenia",scientific:"Gardenia jasminoides",category:"Shrub"},
-  {common:"Giant Yellow Shrimp Plant",scientific:"Barleria micans",category:"Shrub"},
-  {common:"Gold Mound / Golden Dewdrops",scientific:"Duranta erecta",category:"Shrub"},
-  {common:"Green Island Ficus",scientific:"Ficus microcarpa",category:"Shrub"},
-  {common:"Hibiscus",scientific:"Hibiscus rosa-sinensis",category:"Shrub"},
-  {common:"Holly - Burford",scientific:"Ilex cornuta",category:"Shrub"},
-  {common:"Holly - Miniature",scientific:"Malpighia coccigera",category:"Shrub"},
-  {common:"Holly - Yaupon",scientific:"Ilex vomitoria",category:"Shrub"},
-  {common:"Ixora",scientific:"Ixora coccinea",category:"Shrub"},
-  {common:"Japanese Silvergrass",scientific:"Miscanthus sinensis",category:"Shrub"},
-  {common:"King's Mantle",scientific:"Thunbergia erecta",category:"Shrub"},
-  {common:"Loropetalum",scientific:"Loropetalum chinense",category:"Shrub"},
-  {common:"Natal-Plum",scientific:"Carissa macrocarpa",category:"Shrub"},
-  {common:"Oleander",scientific:"Nerium oleander",category:"Shrub"},
-  {common:"Peregrina",scientific:"Jatropha integerrima",category:"Shrub"},
-  {common:"Pittosporum",scientific:"Pittosporum tobira",category:"Shrub"},
-  {common:"Plumbago",scientific:"Plumbago auriculata",category:"Shrub"},
-  {common:"Podocarpus",scientific:"Podocarpus macrophyllus",category:"Shrub"},
-  {common:"Red Powderpuff",scientific:"Calliandra haematocephala",category:"Shrub"},
-  {common:"Rose",scientific:"Rosa chinensis",category:"Shrub"},
-  {common:"Rosemary",scientific:"Salvia rosmarinus",category:"Shrub"},
-  {common:"Rusty Lyonia",scientific:"Lyonia ferruginea",category:"Shrub"},
-  {common:"Sandankwa Viburnum",scientific:"Viburnum suspensum",category:"Shrub"},
-  {common:"Schefflera",scientific:"Schefflera arboricola",category:"Shrub"},
-  {common:"Selloum / Tree Philodendron",scientific:"Philodendron selloum",category:"Shrub"},
-  {common:"Simpson's Stopper",scientific:"Myrcianthes fragrans",category:"Shrub"},
-  {common:"Star Jasmine",scientific:"Jasminum nitidum",category:"Shrub"},
-  {common:"Sweet Almond Bush",scientific:"Aloysia virgata",category:"Shrub"},
-  {common:"Texas Sage",scientific:"Leucophyllum frutescens",category:"Shrub"},
-  {common:"Thryallis",scientific:"Galphimia glauca",category:"Shrub"},
-  {common:"Ti Plant",scientific:"Cordyline fruticosa",category:"Shrub"},
-  {common:"Titi",scientific:"Cyrilla racemiflora",category:"Shrub"},
-  {common:"Wax Jasmine",scientific:"Jasminum volubile",category:"Shrub"},
-  {common:"Weeping Fern Pine",scientific:"Podocarpus gracilior",category:"Shrub"},
-  {common:"Weeping Lantana",scientific:"Lantana depressa",category:"Shrub"},
-  {common:"White Bird-of-Paradise",scientific:"Strelitzia nicolai",category:"Shrub"},
-  {common:"Wild Coffee",scientific:"Psychotria nervosa",category:"Shrub"},
-  {common:"Yesterday-Today-Tomorrow",scientific:"Brunfelsia grandiflora",category:"Shrub"},
-  {common:"Yellow Shrimp Plant",scientific:"Barleria micans",category:"Shrub"},
-  {common:"Yucca",scientific:"Yucca filamentosa",category:"Shrub"},
-  // Trees
-  {common:"Bottlebrush",scientific:"Callistemon viminalis",category:"Tree"},
-  {common:"Buttonwood",scientific:"Conocarpus erectus",category:"Tree"},
-  {common:"Crape Myrtle",scientific:"Lagerstroemia indica",category:"Tree"},
-  {common:"Elderberry",scientific:"Sambucus canadensis",category:"Tree"},
-  {common:"Fiddlewood",scientific:"Citharexylum spinosum",category:"Tree"},
-  {common:"Florida Privet",scientific:"Forestiera segregata",category:"Tree"},
-  {common:"Frangipani",scientific:"Plumeria rubra",category:"Tree"},
-  {common:"Geiger Tree",scientific:"Cordia sebestena",category:"Tree"},
-  {common:"Holly - Dahoon",scientific:"Ilex cassine",category:"Tree"},
-  {common:"Holly - East Palatka",scientific:"Ilex x attenuata",category:"Tree"},
-  {common:"Hong Kong Orchid Tree",scientific:"Bauhinia blakeana",category:"Tree"},
-  {common:"Jamaica Caper",scientific:"Capparis cynophallophora",category:"Tree"},
-  {common:"Little Gem Magnolia",scientific:"Magnolia grandiflora",category:"Tree"},
-  {common:"Necklace Pod",scientific:"Sophora tomentosa",category:"Tree"},
-  {common:"Poinciana",scientific:"Caesalpinia pulcherrima",category:"Tree"},
-  {common:"Seagrape",scientific:"Coccoloba uvifera",category:"Tree"},
-  {common:"Silver Buttonwood",scientific:"Conocarpus erectus sericeus",category:"Tree"},
-  {common:"Stoppers",scientific:"Eugenia spp.",category:"Tree"},
-  {common:"Swamp Dogwood",scientific:"Cornus foemina",category:"Tree"},
-  {common:"Sweet Acacia",scientific:"Vachellia farnesiana",category:"Tree"},
-  {common:"Sweet Viburnum",scientific:"Viburnum odoratissimum",category:"Tree"},
-  {common:"Tabebuia",scientific:"Tabebuia heterophylla",category:"Tree"},
-  {common:"Walter's Viburnum",scientific:"Viburnum obovatum",category:"Tree"},
-  {common:"White Geiger",scientific:"Cordia boissieri",category:"Tree"},
-  {common:"Ylang Ylang",scientific:"Cananga odorata",category:"Tree"},
+  // ── ANNUALS & PERENNIALS ─────────────────────────────────────────────────
+  {common:"African Iris",scientific:"Dietes iridioides",category:"Perennial",size:"2–4 ft tall and wide",light:"Full sun to part shade",spacing:"18–24 in",tidbit:"Blooms repeatedly through the year. Each flower lasts only one day, but new ones keep appearing. Tough and drought-tolerant once established."},
+  {common:"Ageratum",scientific:"Ageratum houstonianum",category:"Annual",size:"6–12 in tall",light:"Full sun to part shade",spacing:"6–9 in",tidbit:"Loved by butterflies and bees. The fluffy blue-violet flowers are a magnet for pollinators and bloom continuously from spring through frost."},
+  {common:"Aloe",scientific:"Aloe vera",category:"Perennial",size:"1–2 ft tall, 2–3 ft wide",light:"Full sun",spacing:"2–3 ft",tidbit:"The clear gel inside its leaves has been used medicinally for thousands of years to soothe burns and skin irritation. One of the most useful plants you can grow."},
+  {common:"Amaranth",scientific:"Amaranthus tricolor",category:"Annual",size:"2–4 ft tall",light:"Full sun",spacing:"12–18 in",tidbit:"An ancient grain crop used by the Aztecs. The seeds are edible and highly nutritious. Its dramatic foliage in red, yellow, and green makes it a striking garden plant."},
+  {common:"Amaryllis",scientific:"Hippeastrum hybridum",category:"Annual / Perennial",size:"18–24 in tall",light:"Full sun to part shade",spacing:"12 in",tidbit:"Native to South America, its trumpet-shaped blooms can reach 6 inches across. Named from the Greek for 'sparkling' — a nod to its showstopping flowers."},
+  {common:"Angelonia",scientific:"Angelonia angustifolia",category:"Annual / Perennial",size:"12–18 in tall",light:"Full sun",spacing:"12 in",tidbit:"Often called the 'summer snapdragon.' Thrives in heat and humidity when snapdragons wilt. Has a faint grape-like scent and blooms all season long."},
+  {common:"Autumn Fern",scientific:"Dryopteris erythrosora",category:"Perennial",size:"18–24 in tall and wide",light:"Part to full shade",spacing:"18 in",tidbit:"New fronds emerge a brilliant copper-red before maturing to glossy green — a rare colour change in ferns. Evergreen in mild Florida winters."},
+  {common:"Aztec Lily",scientific:"Sprekelia formosissima",category:"Perennial",size:"12–18 in tall",light:"Full sun",spacing:"6 in",tidbit:"Also called the Jacobean Lily. Native to Mexico and Guatemala, its deep crimson flowers look like exotic orchids. Has been cultivated since the 16th century."},
+  {common:"Blackberry Lily",scientific:"Iris domestica",category:"Perennial",size:"2–3 ft tall",light:"Full sun to part shade",spacing:"12–18 in",tidbit:"Not a lily at all — it's actually in the iris family. Gets its name from the clusters of shiny black seeds that appear after flowering, resembling blackberries."},
+  {common:"Blanket Flower",scientific:"Gaillardia pulchella",category:"Perennial",size:"12–18 in tall",light:"Full sun",spacing:"12–18 in",tidbit:"A Florida native wildflower found naturally on coastal dunes. Extremely drought and salt tolerant. Named 'blanket flower' because it blankets fields with color."},
+  {common:"Blazing Star",scientific:"Liatris spicata",category:"Perennial",size:"2–4 ft tall",light:"Full sun",spacing:"12–18 in",tidbit:"Unusually, its flower spikes bloom from the top down rather than bottom up. A superb native plant for attracting monarch butterflies during their fall migration."},
+  {common:"Blood Lily",scientific:"Scadoxus multiflorus",category:"Perennial",size:"12–18 in tall",light:"Part shade",spacing:"12 in",tidbit:"Produces a spectacular ball of up to 200 tiny red flowers on a single stem — looking like a fireworks burst. Bulbs are toxic if ingested but visually dramatic."},
+  {common:"Blue Daze",scientific:"Evolvulus glomeratus",category:"Perennial",size:"6–12 in tall, 24 in wide",light:"Full sun",spacing:"12–18 in",tidbit:"Flowers open in the morning and close by evening — a daily performance. Related to morning glory, but much better behaved and not invasive."},
+  {common:"Blue Flag Iris",scientific:"Iris virginica",category:"Perennial",size:"2–3 ft tall",light:"Full sun to part shade",spacing:"12–18 in",tidbit:"A Florida native that thrives in wet soils and pond edges. Provides critical habitat for native bees and is a larval host plant for several butterfly species."},
+  {common:"Blue Phlox",scientific:"Phlox divaricata",category:"Perennial",size:"10–14 in tall",light:"Part to full shade",spacing:"12 in",tidbit:"One of the few true blue wildflowers native to North America. Delightfully fragrant and blooms in early spring, often before most other plants awaken."},
+  {common:"Bracken Fern",scientific:"Pteridium aquilinum",category:"Perennial",size:"2–4 ft tall",light:"Full sun to part shade",spacing:"3–4 ft",tidbit:"One of the oldest and most widespread plants on Earth — fossil records date back 55 million years. Thrives in disturbed soils and spreads by underground rhizomes."},
+  {common:"Bromeliads",scientific:"Aechmea fasciata",category:"Perennial",size:"1–3 ft tall and wide",light:"Bright indirect light to part shade",spacing:"12–24 in",tidbit:"Most bromeliads only bloom once in their lifetime, then produce 'pups' (offsets) before dying. The cup formed by their leaves collects water and can host entire ecosystems of tiny frogs and insects in the wild."},
+  {common:"Butterfly Lily",scientific:"Hedychium coronarium",category:"Annual / Perennial",size:"4–6 ft tall",light:"Full sun to part shade",spacing:"24–36 in",tidbit:"The national flower of Cuba. Its intensely sweet fragrance is strongest at night, attracting sphinx moths for pollination. Used in Hawaiian lei-making."},
+  {common:"Caladium",scientific:"Caladium bicolor",category:"Annual / Perennial",size:"12–30 in tall",light:"Part to full shade",spacing:"12–18 in",tidbit:"Florida is the world's leading producer of caladium bulbs — over 95% of commercial caladiums sold worldwide are grown in Highlands County, FL."},
+  {common:"Canna Lily",scientific:"Canna indica",category:"Annual",size:"3–8 ft tall",light:"Full sun",spacing:"18–24 in",tidbit:"Not a true lily — it's related to ginger and bananas. The seeds are so hard and uniform they were historically used as shot in guns and as beads in jewelry."},
+  {common:"Celosia",scientific:"Celosia argentea",category:"Annual",size:"6–24 in tall",light:"Full sun",spacing:"6–12 in",tidbit:"The name comes from the Greek word for 'burning' — describing its flame-like flower plumes. Edible in many parts of Africa and Asia where it's grown as a vegetable."},
+  {common:"Cinnamon Fern",scientific:"Osmundastrum cinnamomeum",category:"Annual / Perennial",size:"3–5 ft tall",light:"Part to full shade",spacing:"3–4 ft",tidbit:"Gets its name from the cinnamon-colored fertile fronds at the center of the plant. One of the oldest living fern species — virtually unchanged for 180 million years."},
+  {common:"Coleus",scientific:"Plectranthus scutellarioides",category:"Annual / Perennial",size:"12–36 in tall",light:"Part shade to full shade",spacing:"12 in",tidbit:"Originally from Southeast Asia, coleus leaves come in virtually every color except blue. Pinching off flower buds keeps the foliage vibrant and the plant bushy."},
+  {common:"Curcuma",scientific:"Curcuma longa",category:"Perennial",size:"2–4 ft tall",light:"Part shade",spacing:"18–24 in",tidbit:"This is the plant that gives us the spice turmeric! The bright orange rhizomes are ground into the golden spice used in curry. Showy tropical flowers are a bonus."},
+  {common:"Daisy Bush",scientific:"Euryops pectinatus",category:"Perennial",size:"3–6 ft tall and wide",light:"Full sun",spacing:"3–4 ft",tidbit:"Native to South Africa's highlands, it blooms almost year-round in Florida's climate. The bright yellow daisy-like flowers are irresistible to butterflies and bees."},
+  {common:"Dune Sunflower",scientific:"Helianthus debilis",category:"Perennial",size:"2–3 ft tall, spreading",light:"Full sun",spacing:"24–36 in",tidbit:"A Florida native wildflower built for tough coastal conditions — tolerates salt spray, sandy soil, drought, and heat. Spreads readily and attracts goldfinches to its seeds."},
+  {common:"Elephant Ears",scientific:"Alocasia macrorrhiza",category:"Perennial",size:"6–15 ft tall",light:"Part shade",spacing:"4–6 ft",tidbit:"Individual leaves can reach 3 feet long or more. In the tropics the starchy corms are eaten as a food staple, but must be thoroughly cooked as raw plants are toxic."},
+  {common:"Firecracker Flower",scientific:"Crossandra infundibuliformis",category:"Perennial",size:"12–18 in tall",light:"Part shade to full sun",spacing:"12 in",tidbit:"One of the few flowers that blooms virtually without pause in Florida's heat. The orange flowers are used in garlands in South India and called 'kanakambaram.'"},
+  {common:"Firespike",scientific:"Odontonema strictum",category:"Perennial",size:"4–6 ft tall",light:"Full sun to part shade",spacing:"3–4 ft",tidbit:"The brilliant red flower spikes are irresistible to hummingbirds and butterflies. Blooms in fall when many other plants are winding down, providing critical late-season nectar."},
+  {common:"Flax Lily",scientific:"Dianella tasmanica",category:"Annual / Perennial",size:"2–3 ft tall",light:"Full sun to part shade",spacing:"18–24 in",tidbit:"After flowering, produces beautiful metallic-blue berries that persist for months. Indigenous Australians used the long leaf fibres to weave baskets and nets."},
+  {common:"Gazania",scientific:"Gazania rigens",category:"Annual",size:"6–10 in tall",light:"Full sun",spacing:"9–12 in",tidbit:"Flowers open only in sunlight and close at night and on cloudy days — a behavior called nyctinasty. Native to South Africa's Cape region, where it carpets coastal hillsides."},
+  {common:"Gloriosa Lily",scientific:"Gloriosa superba",category:"Annual / Perennial",size:"Vine, 6–8 ft",light:"Full sun to part shade",spacing:"12 in",tidbit:"Every part of this spectacular climbing lily is deadly poisonous — it's one of the most toxic plants in the world. Yet it's the national flower of Zimbabwe and an important medicinal plant."},
+  {common:"Golden Shrimp Plant",scientific:"Pachystachys lutea",category:"Perennial",size:"3–5 ft tall",light:"Full sun to part shade",spacing:"24–36 in",tidbit:"The golden bracts look like stacked shrimp — the white flowers that emerge from them are the true blooms. Hummingbirds and butterflies are especially fond of it."},
+  {common:"Goldenrod",scientific:"Solidago canadensis",category:"Annual / Perennial",size:"2–4 ft tall",light:"Full sun",spacing:"18–24 in",tidbit:"Unfairly blamed for hay fever (ragweed is the real culprit — it blooms at the same time). Goldenrod pollen is too heavy to be wind-borne. Supports over 100 species of butterflies and moths."},
+  {common:"Impatiens",scientific:"Impatiens walleriana",category:"Annual / Perennial",size:"6–18 in tall",light:"Part to full shade",spacing:"8–12 in",tidbit:"One of the world's most popular bedding plants. The Latin name 'impatiens' refers to the seed pods, which explosively burst open when touched, flinging seeds up to several feet."},
+  {common:"Jacobinia",scientific:"Justicia carnea",category:"Perennial",size:"3–5 ft tall",light:"Part shade",spacing:"24–36 in",tidbit:"Produces dense plumes of deep pink flowers that hummingbirds absolutely love. Blooms summer through fall when hummingbirds are preparing for migration — perfect timing."},
+  {common:"Kalanchoe",scientific:"Kalanchoe blossfeldiana",category:"Annual / Perennial",size:"6–18 in tall",light:"Full sun to part shade",spacing:"8–12 in",tidbit:"A photoperiod plant — it needs long nights to trigger blooming. Growers trick it into blooming year-round by controlling light exposure. Succulent leaves store water efficiently."},
+  {common:"Lily of the Nile",scientific:"Agapanthus africanus",category:"Perennial",size:"18–24 in tall",light:"Full sun to part shade",spacing:"18–24 in",tidbit:"Despite its name, this African native has no connection to the Nile River. In South Africa it's considered a lucky plant and traditionally hung above doors to ward off evil spirits."},
+  {common:"Lion's Ear",scientific:"Leonotis leonurus",category:"Perennial",size:"4–6 ft tall",light:"Full sun",spacing:"3–4 ft",tidbit:"The whorls of bright orange flowers march up the stem like layers, giving it its common name. In its native South Africa it's used medicinally and considered mildly psychoactive."},
+  {common:"Louisiana Iris",scientific:"Iris hexagona",category:"Perennial",size:"2–4 ft tall",light:"Full sun to part shade",spacing:"18–24 in",tidbit:"Florida's native iris, perfectly adapted to wet soils, ditches, and pond margins. Provides excellent cover for nesting ducks and wading birds along waterways."},
+  {common:"Marigold",scientific:"Tagetes erecta",category:"Annual",size:"12–36 in tall",light:"Full sun",spacing:"10–12 in",tidbit:"Planted extensively in vegetable gardens because the roots release a chemical that repels nematodes in the soil. Sacred in Hindu and Mexican culture — essential for Día de los Muertos altars."},
+  {common:"Mexican Heather",scientific:"Cuphea hyssopifolia",category:"Annual / Perennial",size:"12–18 in tall and wide",light:"Full sun to part shade",spacing:"12–18 in",tidbit:"Despite its delicate appearance, it's remarkably tough in Florida's heat. The tiny flowers are a favorite of sulfur butterflies, and it blooms almost non-stop all year."},
+  {common:"Milkweed",scientific:"Asclepias tuberosa",category:"Annual / Perennial",size:"18–36 in tall",light:"Full sun",spacing:"12–18 in",tidbit:"The ONLY plant monarch butterfly caterpillars will eat. Planting milkweed is one of the most impactful things you can do for monarch conservation. The milky sap makes monarchs toxic to predators."},
+  {common:"Pansy",scientific:"Viola tricolor",category:"Perennial",size:"6–9 in tall",light:"Full sun to part shade",spacing:"6–8 in",tidbit:"Pansies are edible and used to decorate cakes and salads. The name comes from the French 'pensée' meaning 'thought' — they were historically associated with remembrance and love."},
+  {common:"Peacock Ginger",scientific:"Kaempferia pulchra",category:"Annual / Perennial",size:"6–12 in tall",light:"Part to full shade",spacing:"12 in",tidbit:"Grown primarily for its stunning iridescent foliage — the small lavender flowers are a bonus. Leaves fold up at night like hands in prayer, earning it the alternate name 'resurrection plant.'"},
+  {common:"Pentas",scientific:"Pentas lanceolata",category:"Annual / Perennial",size:"18–36 in tall",light:"Full sun",spacing:"12–18 in",tidbit:"One of the absolute best butterfly plants for Florida. The star-shaped flower clusters are a nectar source for dozens of butterfly species. Blooms continuously in heat that defeats most plants."},
+  {common:"Periwinkle",scientific:"Catharanthus roseus",category:"Annual",size:"12–18 in tall",light:"Full sun",spacing:"10–12 in",tidbit:"Contains powerful alkaloids used in chemotherapy drugs (vincristine and vinblastine) that revolutionized treatment of childhood leukemia. One of medicine's most important plants."},
+  {common:"Petunia",scientific:"Petunia hybrida",category:"Annual",size:"6–18 in tall",light:"Full sun",spacing:"12 in",tidbit:"Native to South America, petunias are in the same family as tomatoes, potatoes, and tobacco. The sticky stems trap and digest small insects — they're very mildly carnivorous."},
+  {common:"Philodendron",scientific:"Philodendron hederaceum",category:"Perennial",size:"Trailing vine, 10+ ft",light:"Bright indirect to low light",spacing:"12–24 in",tidbit:"One of the most studied plants for air purification. The genus name means 'tree lover' in Greek — in the wild these vines climb enormous jungle trees reaching toward the canopy light."},
+  {common:"Pine Cone Ginger",scientific:"Zingiber zerumbet",category:"Perennial",size:"3–5 ft tall",light:"Part shade to full sun",spacing:"24–36 in",tidbit:"The cone-like flower bracts fill with a clear, fragrant liquid used as a natural shampoo in Southeast Asia and Hawaii, where it's called 'shampoo ginger.'"},
+  {common:"Plectranthus",scientific:"Plectranthus amboinicus",category:"Perennial",size:"12–24 in tall",light:"Full sun to part shade",spacing:"18–24 in",tidbit:"Strongly aromatic leaves smell of oregano and thyme — it's edible and used as a herb in Caribbean and African cooking. Deer and pests tend to avoid it due to the strong scent."},
+  {common:"Porterweed",scientific:"Stachytarpheta jamaicensis",category:"Annual",size:"2–4 ft tall",light:"Full sun",spacing:"24 in",tidbit:"A Florida native that's among the absolute best plants for attracting hummingbirds and butterflies. Long flower spikes produce nectar continuously and the flowers open progressively up the spike."},
+  {common:"Pot Marigold",scientific:"Calendula officinalis",category:"Annual",size:"12–24 in tall",light:"Full sun",spacing:"12 in",tidbit:"One of the oldest cultivated flowers — used medicinally since ancient Egypt. The petals are edible, used to color butter and cheese as a cheap saffron substitute. Still used today in skincare products."},
+  {common:"Powderpuff",scientific:"Mimosa strigillosa",category:"Perennial",size:"6–12 in tall, spreading",light:"Full sun",spacing:"24–36 in",tidbit:"A low-growing Florida native groundcover. Touch its leaves and they fold closed within seconds — a defensive response called 'thigmonasty.' Pink powderpuff flowers attract native bees."},
+  {common:"Purple Coneflower",scientific:"Echinacea purpurea",category:"Perennial",size:"2–4 ft tall",light:"Full sun",spacing:"18–24 in",tidbit:"One of the most widely studied medicinal herbs — used for centuries by Native Americans. Supports an exceptional number of native bee species and goldfinches eat the seeds in fall."},
+  {common:"Rain Lily",scientific:"Zephyranthes grandiflora",category:"Perennial",size:"6–12 in tall",light:"Full sun",spacing:"4–6 in",tidbit:"True to its name, these bulbs bloom within days of a heavy summer rain — triggered by the sudden moisture. Great for naturalizing in lawns, where they appear magically after storms."},
+  {common:"Royal Fern",scientific:"Osmunda regalis",category:"Perennial",size:"3–6 ft tall",light:"Part shade",spacing:"3–4 ft",tidbit:"Can live for over 100 years in the right conditions. Fossil evidence shows this fern is over 200 million years old — essentially unchanged since the Triassic period. Thrives in boggy, wet soils."},
+  {common:"Salvia",scientific:"Salvia splendens",category:"Perennial",size:"12–30 in tall",light:"Full sun to part shade",spacing:"12–18 in",tidbit:"Hummingbirds can detect red light more vividly than any other color — which is why red salvia is their absolute favorite. The genus Salvia has over 900 species, making it one of the largest plant genera."},
+  {common:"Shell Ginger",scientific:"Alpinia zerumbet",category:"Annual / Perennial",size:"6–8 ft tall",light:"Part shade to full sun",spacing:"4–6 ft",tidbit:"The dangling clusters of shell-like pink and white flower buds are among the most beautiful in the plant world. Leaves have a gingery fragrance when crushed and are used to wrap food in Asia."},
+  {common:"Shrimp Plant",scientific:"Justicia brandegeeana",category:"Perennial",size:"2–4 ft tall",light:"Part shade to full sun",spacing:"18–24 in",tidbit:"The overlapping reddish-bronze bracts look exactly like a cooked shrimp — hence the name. Hummingbirds find the nectar-rich white flowers irresistible and visit constantly."},
+  {common:"Society Garlic",scientific:"Tulbaghia violacea",category:"Perennial",size:"18–24 in tall",light:"Full sun",spacing:"12–18 in",tidbit:"Smells like garlic when the foliage is crushed, but the lavender flowers are sweetly fragrant. The name 'society garlic' comes from the idea you could eat it before social occasions without garlic breath."},
+  {common:"Southern Maidenhair Fern",scientific:"Adiantum capillus-veneris",category:"Perennial",size:"12–18 in tall",light:"Part to full shade",spacing:"12–18 in",tidbit:"One of the most delicate-looking but surprisingly resilient ferns. The shiny black stems (which look like hair) inspired the Latin name meaning 'hair of Venus.' Thrives near waterfalls and wet walls."},
+  {common:"Spider Lily",scientific:"Hymenocallis littoralis",category:"Perennial",size:"18–24 in tall",light:"Full sun to part shade",spacing:"12 in",tidbit:"The dramatic spidery white flowers are intensely fragrant at night, attracting hawk moths. Native to coastal Florida, it tolerates brief flooding and salt spray remarkably well."},
+  {common:"Spiral Ginger",scientific:"Costus speciosus",category:"Perennial",size:"4–8 ft tall",light:"Part shade",spacing:"3–4 ft",tidbit:"The leaves spiral up the cane in a perfect helix — this unusual growth habit gives it the common name. Related to true ginger and used medicinally throughout Asia for centuries."},
+  {common:"Sweet Alyssum",scientific:"Lobularia maritima",category:"Annual",size:"3–6 in tall, spreading",light:"Full sun to part shade",spacing:"6–12 in",tidbit:"Releases a sweet honey-like fragrance, especially in the evening. Excellent for attracting beneficial insects like parasitic wasps that prey on garden pests. Reseeds freely."},
+  {common:"Tickseed",scientific:"Coreopsis lanceolata",category:"Perennial",size:"12–24 in tall",light:"Full sun",spacing:"12–18 in",tidbit:"Florida's official state wildflower. Extremely drought-tolerant and native to Florida scrub habitats. Gets its odd name from the tick-shaped seeds. Blooms almost year-round in Florida."},
+  {common:"Twin Flower",scientific:"Dyschoriste oblongifolia",category:"Perennial",size:"6–18 in tall",light:"Full sun to part shade",spacing:"12 in",tidbit:"A low-growing Florida native with charming small lavender flowers. An important larval host plant for the Common Buckeye butterfly. Spreads naturally to form attractive groundcover colonies."},
+  {common:"Voodoo Lily",scientific:"Amorphophallus konjac",category:"Perennial",size:"3–5 ft tall",light:"Part shade",spacing:"3–4 ft",tidbit:"Produces one of the world's most bizarre flowers — a large deep purple spathe that smells like rotting flesh for a few days to attract flies for pollination. The corm is the source of konjac flour used in shirataki noodles."},
+  {common:"Walking Iris",scientific:"Neomarica gracilis",category:"Annual / Perennial",size:"18–36 in tall",light:"Part shade to full sun",spacing:"18–24 in",tidbit:"Gets its name from a unique trick: after blooming, the flower stalk bends to the ground and a new plantlet roots where it touches soil — 'walking' away from the parent."},
+  {common:"Wax Begonia",scientific:"Begonia semperflorens",category:"Annual / Perennial",size:"6–12 in tall",light:"Part shade to full sun",spacing:"8–12 in",tidbit:"'Semperflorens' means 'ever-flowering' in Latin — and it earns that name by blooming nonstop from spring through frost. One of the most reliable plants for Florida's challenging heat."},
+  {common:"Wishbone Flower",scientific:"Torenia fournieri",category:"Annual",size:"8–12 in tall",light:"Part shade",spacing:"6–8 in",tidbit:"Named for the two curved stamens inside the flower that look like a wishbone. One of the few annuals that thrives in shade while still producing prolific colorful blooms."},
+  {common:"Zinnia",scientific:"Zinnia elegans",category:"Annual",size:"12–36 in tall",light:"Full sun",spacing:"6–18 in",tidbit:"NASA grew zinnias aboard the International Space Station in 2016 — the first flowering plant grown in space. A monarch butterfly favorite and the easiest annual to grow from seed."},
+  // ── GRASSES ───────────────────────────────────────────────────────────────
+  {common:"Cordgrass",scientific:"Spartina alterniflora",category:"Grass",size:"3–7 ft tall",light:"Full sun",spacing:"18–24 in",tidbit:"The backbone of coastal salt marshes. Its roots trap sediment and build land, while dead stems provide food for the entire marsh food chain. Essential for coastal erosion control."},
+  {common:"Dwarf Fakahatchee Grass",scientific:"Tripsacum dactyloides",category:"Grass",size:"2–4 ft tall",light:"Full sun to part shade",spacing:"3–4 ft",tidbit:"A tough Florida native grass that tolerates flooding, drought, salt, and poor soil. Related to corn and named after Florida's Fakahatchee Strand preserve. Excellent for low-maintenance naturalistic plantings."},
+  {common:"Elliott's Lovegrass",scientific:"Eragrostis elliottii",category:"Grass",size:"2–3 ft tall",light:"Full sun",spacing:"24–36 in",tidbit:"A beautiful Florida native with airy silver-blue seed heads that catch every breeze. One of the most graceful ornamental grasses for Florida gardens. Extremely drought tolerant."},
+  {common:"Lemongrass",scientific:"Cymbopogon citratus",category:"Grass",size:"3–5 ft tall and wide",light:"Full sun",spacing:"3–4 ft",tidbit:"Essential in Thai and Vietnamese cooking. The lemon-scented oil (citronella) in the leaves naturally repels mosquitoes. One of the most useful plants you can add to a Florida garden."},
+  {common:"Miscanthus",scientific:"Miscanthus sinensis",category:"Grass",size:"4–8 ft tall",light:"Full sun",spacing:"3–5 ft",tidbit:"The most widely planted ornamental grass in the world. Produces spectacular feathery plumes in fall that persist through winter. Over 100 cultivars exist offering enormous variety."},
+  {common:"Muhly Grass",scientific:"Muhlenbergia capillaris",category:"Grass",size:"3–4 ft tall",light:"Full sun",spacing:"3–4 ft",tidbit:"Florida's most spectacular native grass. In fall it transforms into a cloud of deep pink-purple flowers so dramatic it's planted along Florida highways. Essentially no maintenance once established."},
+  {common:"Panic Grass",scientific:"Panicum virgatum",category:"Grass",size:"3–6 ft tall",light:"Full sun",spacing:"2–3 ft",tidbit:"A major component of the original North American tallgrass prairie. Now studied extensively as a biofuel crop. The seed heads provide winter food for dozens of bird species."},
+  {common:"Purple Fountain Grass",scientific:"Pennisetum setaceum",category:"Grass",size:"3–4 ft tall",light:"Full sun",spacing:"3–4 ft",tidbit:"The burgundy foliage and fuzzy purple plumes create a dramatic fountain effect. Caution: it can be invasive in some natural areas of Florida, so avoid planting near wildlands."},
+  {common:"Purple Lovegrass",scientific:"Eragrostis spectabilis",category:"Grass",size:"12–24 in tall",light:"Full sun",spacing:"18–24 in",tidbit:"Creates a hazy purple-pink cloud of tiny flowers in late summer that persists for months. A Florida native that's perfect for dry, sandy areas where little else grows well."},
+  {common:"Salt Grass",scientific:"Distichlis spicata",category:"Grass",size:"6–18 in tall",light:"Full sun",spacing:"12–18 in",tidbit:"Can tolerate soil saltier than seawater — one of the most salt-tolerant plants on Earth. Native Americans harvested the seeds as a grain. Critical for stabilizing coastal and brackish areas."},
+  {common:"Wiregrass",scientific:"Aristida stricta",category:"Grass",size:"12–24 in tall",light:"Full sun",spacing:"12–18 in",tidbit:"The defining plant of Florida's longleaf pine ecosystem. Historically covered millions of acres of Florida. Essential for maintaining the fire cycle that keeps Florida scrub and flatwoods healthy."},
+  // ── GROUND COVERS ─────────────────────────────────────────────────────────
+  {common:"Algerian Ivy",scientific:"Hedera canariensis",category:"Ground Cover",size:"6–8 in tall, spreads widely",light:"Part to full shade",spacing:"18–24 in",tidbit:"Larger-leaved than English ivy and more tolerant of heat. Excellent for covering large shaded areas quickly. Note: can escape into natural areas — plant with awareness of nearby wild spaces."},
+  {common:"Blue Pacific Juniper",scientific:"Juniperus conferta",category:"Ground Cover",size:"12–18 in tall, 6–8 ft wide",light:"Full sun",spacing:"5–6 ft",tidbit:"Exceptionally salt and drought tolerant — ideal for coastal landscapes. The silver-blue foliage provides year-round color. Berries are attractive to waxwings and cedar birds in winter."},
+  {common:"Confederate Jasmine",scientific:"Trachelospermum jasminoides",category:"Ground Cover",size:"Vine/ground cover, 20+ ft",light:"Full sun to part shade",spacing:"5 ft as ground cover",tidbit:"The intoxicating fragrance is one of the most recognizable scents in Southern gardens. Despite the name, it's native to China and Japan, not the Confederacy. Blooms in late spring with masses of white pinwheel flowers."},
+  {common:"Foxtail Fern",scientific:"Asparagus densiflorus",category:"Ground Cover",size:"2–3 ft tall and wide",light:"Part shade to full sun",spacing:"18–24 in",tidbit:"Despite the name, it's not a true fern — it's related to asparagus. The bright red berries are toxic to humans and pets. Its tuberous roots store water, making it remarkably drought tolerant."},
+  {common:"Holly Fern",scientific:"Cyrtomium falcatum",category:"Ground Cover",size:"18–24 in tall",light:"Part to full shade",spacing:"18–24 in",tidbit:"One of the most durable ferns for Florida gardens. The glossy, leathery fronds look almost artificial they're so perfect. More drought and sun tolerant than most ferns. Virtually pest-free."},
+  {common:"Inkberry",scientific:"Scaevola plumieri",category:"Ground Cover",size:"2–4 ft tall",light:"Full sun",spacing:"3–4 ft",tidbit:"A Florida native coastal plant that naturally grows on beaches and dunes. Tolerates salt spray and sandy soil. White flowers produce black berries that shorebirds love. Excellent for dune stabilization."},
+  {common:"Juniper Parsonii",scientific:"Juniperus horizontalis",category:"Ground Cover",size:"12–18 in tall, 6–10 ft wide",light:"Full sun",spacing:"5–6 ft",tidbit:"One of the most cold and heat tolerant junipers. Dense mat-forming habit suppresses weeds effectively once established. Provides nesting cover for ground-nesting birds and small wildlife."},
+  {common:"Leatherleaf Fern",scientific:"Rumohra adiantiformis",category:"Ground Cover",size:"18–30 in tall",light:"Part to full shade",spacing:"18–24 in",tidbit:"The most popular florist fern in the world — those dark green fronds in flower arrangements are almost always leatherleaf. Remarkably durable: cut fronds stay fresh for up to three weeks."},
+  {common:"Mondo Grass",scientific:"Ophiopogon japonicus",category:"Ground Cover",size:"6–12 in tall",light:"Part to full shade",spacing:"6–12 in",tidbit:"Not a true grass — it's in the asparagus family. Nearly indestructible once established: tolerates drought, shade, foot traffic, and neglect. The black variety ('Nigrescens') is particularly dramatic."},
+  {common:"Perennial Peanut",scientific:"Arachis glabrata",category:"Ground Cover",size:"6–8 in tall",light:"Full sun",spacing:"12–18 in",tidbit:"A nitrogen-fixing groundcover that actually improves soil fertility as it grows. Bright yellow flowers bloom all summer. Used as livestock forage — cattle and horses find it delicious. Virtually no maintenance."},
+  {common:"Small-Leaf Confederate Jasmine",scientific:"Trachelospermum asiaticum",category:"Ground Cover",size:"6–12 in as ground cover",light:"Full sun to part shade",spacing:"3 ft as ground cover",tidbit:"More compact and heat tolerant than its larger cousin. Can be trained as a ground cover, vine, or shrub. The tiny creamy-white flowers are intensely fragrant in late spring."},
+  {common:"St. Bernard's Lily",scientific:"Anthericum sanderii",category:"Ground Cover",size:"12–18 in tall",light:"Part shade to full sun",spacing:"12 in",tidbit:"Elegant grass-like foliage with delicate white star-shaped flowers on tall stems. Low maintenance and deer resistant. Named after the hospice of St. Bernard in the Swiss Alps."},
+  // ── PALMS ────────────────────────────────────────────────────────────────
+  {common:"Alexander Palm",scientific:"Ptychosperma elegans",category:"Palm",size:"25–30 ft tall",light:"Full sun to part shade",spacing:"8–10 ft",tidbit:"A graceful single-trunk palm from Australia with a distinctive smooth green crownshaft. Red berries attract birds. Fast-growing and self-cleaning — dead fronds fall on their own."},
+  {common:"Areca Palm",scientific:"Dypsis lutescens",category:"Palm",size:"20–30 ft tall, clumping",light:"Full sun to part shade",spacing:"8–10 ft",tidbit:"The world's most popular indoor palm, but magnificent outdoors in Florida. Produces up to 100 slender golden-yellow stems per cluster. NASA lists it among the top air-purifying plants."},
+  {common:"Bismark Palm",scientific:"Bismarckia nobilis",category:"Palm",size:"30–60 ft tall",light:"Full sun",spacing:"15–20 ft",tidbit:"Produces some of the most spectacular palm fronds on Earth — massive silvery-blue fans up to 10 feet across. Native to Madagascar. Requires a lot of space but is absolutely stunning."},
+  {common:"Buccaneer Palm",scientific:"Pseudophoenix sargentii",category:"Palm",size:"15–25 ft tall",light:"Full sun",spacing:"8–10 ft",tidbit:"One of Florida's rarest native palms — found only in the Florida Keys and listed as threatened. Slow-growing and incredibly tough once established. The red berries provide important food for wildlife."},
+  {common:"Christmas Palm",scientific:"Adonidia merrillii",category:"Palm",size:"15–25 ft tall",light:"Full sun",spacing:"6–8 ft",tidbit:"Gets its name from the clusters of bright red fruits that appear around Christmas. One of Florida's most widely planted palms. Self-cleaning — dead fronds detach cleanly on their own."},
+  {common:"Coconut Palm",scientific:"Cocos nucifera",category:"Palm",size:"50–100 ft tall",light:"Full sun",spacing:"20–30 ft",tidbit:"Has been called the 'tree of life' — nearly every part is useful. The coconut is technically a seed, fruit, and nut all at once. Coconuts can float across oceans and germinate on distant shores."},
+  {common:"Date Palm",scientific:"Phoenix dactylifera",category:"Palm",size:"50–75 ft tall",light:"Full sun",spacing:"20 ft",tidbit:"One of humanity's oldest cultivated plants — grown for at least 5,000 years in the Middle East. A single tree can produce 200 pounds of dates per year. Pollen was used in ancient Egyptian fertility rituals."},
+  {common:"Dioon Palm",scientific:"Dioon edule",category:"Palm",size:"3–6 ft tall (slow)",light:"Full sun to part shade",spacing:"5–6 ft",tidbit:"Not a true palm — it's a cycad, an ancient plant group that predates dinosaurs by 100 million years. Extremely slow growing (an inch a year), but virtually indestructible. Can live for centuries."},
+  {common:"Fan Palm",scientific:"Livistona chinensis",category:"Palm",size:"30–50 ft tall",light:"Full sun to part shade",spacing:"10–15 ft",tidbit:"The drooping leaf tips create an elegant weeping effect unlike most palms. Native to China and Japan. Blue-green fruits are eaten by birds. Slower growing than most palms but very long-lived."},
+  {common:"Formosa Palm",scientific:"Arenga engleri",category:"Palm",size:"8–10 ft tall, clumping",light:"Part shade to full sun",spacing:"6–8 ft",tidbit:"One of the most cold-tolerant palms suitable for Florida. Forms beautiful multi-stemmed clumps with dark green fronds that have silvery undersides. Produces ornamental red then black fruits."},
+  {common:"Foxtail Palm",scientific:"Wodyetia bifurcata",category:"Palm",size:"20–30 ft tall",light:"Full sun",spacing:"8–10 ft",tidbit:"Discovered by Western botanists only in 1983 in a remote part of Australia. One of the most beautiful palms in the world, with full, arching fronds resembling a fox's tail. Self-cleaning."},
+  {common:"Lady Palm",scientific:"Rhapis excelsa",category:"Palm",size:"6–15 ft tall, clumping",light:"Part to full shade",spacing:"3–5 ft",tidbit:"Considered one of the finest indoor plants in the world. Has been cultivated in Japan for 300 years, where rare variegated specimens sell for thousands of dollars. Slow-growing and very long-lived."},
+  {common:"Paurotis Palm",scientific:"Acoelorrhaphe wrightii",category:"Palm",size:"15–25 ft tall, clumping",light:"Full sun to part shade",spacing:"8–10 ft",tidbit:"Florida's only native clustering fan palm. Rare in the wild and found mainly in the Everglades. The spiky orange stems are striking. Tolerates both flooding and drought — very adaptable."},
+  {common:"Pindo Palm",scientific:"Butia capitata",category:"Palm",size:"15–20 ft tall",light:"Full sun",spacing:"10–15 ft",tidbit:"One of the most cold-hardy palms — survives temperatures down to 10°F. Produces edible yellow-orange fruits used to make a delicious jelly. The feathery silver-green fronds arch gracefully outward."},
+  {common:"Ruffled Fan Palm",scientific:"Licuala grandis",category:"Palm",size:"6–10 ft tall",light:"Part shade",spacing:"5–6 ft",tidbit:"Has the most spectacular undivided circular leaves of any palm — perfectly round, pleated fans up to 2 feet across. Native to Vanuatu. One of the most coveted and photogenic palms in the world."},
+  {common:"Sabal Palm",scientific:"Sabal palmetto",category:"Palm",size:"40–60 ft tall",light:"Full sun",spacing:"10–15 ft",tidbit:"Florida's official state tree. Incredibly tough — survives hurricanes by bending dramatically without breaking. The 'boots' (old frond bases) on young trunks naturally fall off as the palm matures."},
+  {common:"Windmill Palm",scientific:"Trachycarpus fortunei",category:"Palm",size:"15–25 ft tall",light:"Full sun to part shade",spacing:"6–8 ft",tidbit:"The hardiest feather-leafed palm in the world — survives temperatures down to 5°F. The distinctive fibrous brown trunk material (actually old leaf sheaths) protects it from cold. Native to China."},
+  {common:"Yellow Butterfly Palm",scientific:"Chrysalidocarpus lutescens",category:"Palm",size:"20–25 ft tall, clumping",light:"Full sun to part shade",spacing:"6–8 ft",tidbit:"The clustering yellow-green canes and arching fronds create a lush tropical effect. One of the top-ranked plants for removing indoor air pollutants. Golden stems glow beautifully in low light."},
+  // ── SHRUBS ────────────────────────────────────────────────────────────────
+  {common:"Azalea",scientific:"Rhododendron indicum",category:"Shrub",size:"3–6 ft tall and wide",light:"Part shade",spacing:"3–5 ft",tidbit:"Florida's most beloved spring flowering shrub. Azaleas prefer acidic soil — a handful of sulfur worked into the soil annually keeps them happy. All parts are toxic if ingested."},
+  {common:"Beauty Berry",scientific:"Callicarpa americana",category:"Shrub",size:"4–8 ft tall and wide",light:"Full sun to part shade",spacing:"4–5 ft",tidbit:"After the modest white flowers fade, it produces electric-purple berries so vivid they look artificial. A Florida native beloved by mockingbirds, bluebirds, and robins who gorge on the berries in fall."},
+  {common:"Bird-of-Paradise",scientific:"Strelitzia reginae",category:"Shrub",size:"3–5 ft tall",light:"Full sun",spacing:"3–4 ft",tidbit:"The dramatic orange and blue flowers mimic the plumage of a tropical bird. Each flower is actually a landing platform for sunbirds in its native South Africa — the bird's weight triggers pollen release."},
+  {common:"Bougainvillea",scientific:"Bougainvillea spectabilis",category:"Shrub",size:"15–40 ft (vine/shrub)",light:"Full sun",spacing:"5–10 ft",tidbit:"The colorful 'petals' are actually bracts (modified leaves) — the true flowers are tiny white tubes in the center. Drought stress and root restriction actually trigger more blooming. Thorns are sharp."},
+  {common:"Bush Allamanda",scientific:"Allamanda schottii",category:"Shrub",size:"3–5 ft tall and wide",light:"Full sun",spacing:"3–4 ft",tidbit:"Bright butter-yellow trumpet flowers bloom repeatedly throughout the warm season. Related to the vining allamanda but much better behaved. All parts are toxic — wear gloves when pruning."},
+  {common:"Carolina Aster",scientific:"Symphyotrichum carolinianum",category:"Shrub",size:"3–6 ft, vining/sprawling",light:"Full sun to part shade",spacing:"3–4 ft",tidbit:"Florida's native climbing aster, blooming in fall when most plants have given up. Attracts monarch butterflies during their southward migration. Can scramble through other shrubs for a naturalistic look."},
+  {common:"Cast Iron Plant",scientific:"Aspidistra elatior",category:"Shrub",size:"18–30 in tall",light:"Deep shade",spacing:"18–24 in",tidbit:"Lives up to its name completely — tolerates deep shade, drought, poor soil, dust, and neglect that would kill virtually any other plant. Used in Victorian parlors where gas fumes killed everything else."},
+  {common:"Century Plant",scientific:"Agave americana",category:"Shrub",size:"6–10 ft tall, 10–15 ft wide",light:"Full sun",spacing:"8–12 ft",tidbit:"Takes 10–30 years to bloom (not 100 as the name suggests), then sends up a towering flower spike 20–40 ft tall and dies. The parent plant produces offsets before dying, so the colony lives on."},
+  {common:"Chenille Plant",scientific:"Acalypha hispida",category:"Shrub",size:"4–8 ft tall",light:"Full sun to part shade",spacing:"3–4 ft",tidbit:"The long, fuzzy red flower catkins can reach 18 inches — looking exactly like red chenille pipe cleaners or a cat's tail. One of the most visually dramatic tropical shrubs available."},
+  {common:"Cleyera",scientific:"Ternstroemia gymnanthera",category:"Shrub",size:"6–15 ft tall",light:"Part shade to full sun",spacing:"4–6 ft",tidbit:"Often confused with camellias due to similar glossy foliage. New growth emerges in a beautiful bronze-red color. Extremely tough — tolerates drought, pollution, and poor soils once established."},
+  {common:"Cocoplum",scientific:"Chrysobalanus icaco",category:"Shrub",size:"3–15 ft (varies)",light:"Full sun to part shade",spacing:"4–6 ft",tidbit:"A Florida native that grows naturally from coastal scrub to inland forests. Produces edible plum-like fruits used to make jelly. One of the best native plants for wildlife — birds and mammals love the fruit."},
+  {common:"Coontie",scientific:"Zamia integrifolia",category:"Shrub",size:"2–3 ft tall",light:"Full sun to full shade",spacing:"3–4 ft",tidbit:"Florida's only native cycad — a living fossil. The ONLY larval host plant of the Atala butterfly, which was once thought extinct. Native Americans extracted starch from its toxic roots to make flour."},
+  {common:"Copperleaf",scientific:"Acalypha wilkesiana",category:"Shrub",size:"4–8 ft tall",light:"Full sun to part shade",spacing:"3–4 ft",tidbit:"Grown entirely for its spectacular foliage in copper, red, bronze, and green variegated patterns. Dozens of cultivars offer remarkable variety. Provides striking contrast against green plants."},
+  {common:"Crape Jasmine",scientific:"Tabernaemontana divaricata",category:"Shrub",size:"4–6 ft tall and wide",light:"Part shade to full sun",spacing:"3–4 ft",tidbit:"The pure white pinwheel flowers are exquisitely fragrant, especially at night. Used extensively in Indian garlands and temple offerings. Milky sap is toxic — avoid contact with eyes."},
+  {common:"Crinum Lily",scientific:"Crinum asiaticum",category:"Shrub",size:"3–5 ft tall, 4–6 ft wide",light:"Full sun to part shade",spacing:"3–4 ft",tidbit:"One of Florida's toughest bulb plants — virtually indestructible once established. The giant white spider-like flowers are intensely fragrant at night. Bulbs are very toxic if ingested."},
+  {common:"Croton",scientific:"Codiaeum variegatum",category:"Shrub",size:"3–6 ft tall",light:"Full sun to part shade",spacing:"3–4 ft",tidbit:"Produces more leaf color variation than almost any other plant — reds, oranges, yellows, greens, purples, and combinations in one leaf. Brighter light = more intense color. Native to the Pacific Islands."},
+  {common:"Desert Rose",scientific:"Adenium obesum",category:"Shrub",size:"3–9 ft tall",light:"Full sun",spacing:"3–5 ft",tidbit:"The swollen trunk (called a caudex) stores water for long dry periods. Related to oleander. In Thailand, special bonsai specimens sell for thousands of dollars. All parts are highly toxic — used historically as arrow poison."},
+  {common:"Downy Jasmine",scientific:"Jasminum multiflorum",category:"Shrub",size:"3–6 ft (or vining to 15 ft)",light:"Full sun to part shade",spacing:"3–4 ft",tidbit:"Covered in small white star-shaped flowers for months. The 'downy' refers to the soft hair on the stems and leaves. Can be grown as a mounding shrub or trained as a vine on fences."},
+  {common:"Firebush",scientific:"Hamelia patens",category:"Shrub",size:"5–15 ft tall",light:"Full sun to part shade",spacing:"4–6 ft",tidbit:"A Florida native superstar. Hummingbirds and butterflies absolutely swarm it when in bloom. Produces small dark fruits that birds love. Blooms from spring through frost without stopping."},
+  {common:"Firecracker Plant",scientific:"Russelia equisetiformis",category:"Shrub",size:"3–4 ft tall, arching",light:"Full sun to part shade",spacing:"3–4 ft",tidbit:"The cascading stems covered in tiny red tubular flowers look exactly like a fountain of firecrackers. Hummingbirds find it irresistible. Nearly leafless — photosynthesis happens in the green stems."},
+  {common:"Fortune's Mahonia",scientific:"Mahonia fortunei",category:"Shrub",size:"4–6 ft tall",light:"Part to full shade",spacing:"3–4 ft",tidbit:"Produces clusters of fragrant yellow flowers in fall — unusual timing that makes it valuable for pollinators. The blue-black berries attract birds. Tolerates deep shade better than most shrubs."},
+  {common:"Gardenia",scientific:"Gardenia jasminoides",category:"Shrub",size:"3–8 ft tall and wide",light:"Full sun to part shade",spacing:"3–6 ft",tidbit:"The fragrance of gardenia is so complex it contains over 60 chemical compounds. Beloved worldwide but notoriously fussy about soil pH (must be acidic) and subject to whiteflies. Worth every bit of effort."},
+  {common:"Giant Yellow Shrimp Plant",scientific:"Barleria micans",category:"Shrub",size:"3–5 ft tall",light:"Full sun to part shade",spacing:"3–4 ft",tidbit:"Produces bright yellow shrimp-like flower clusters continuously through warm months. Attracts hummingbirds and butterflies. More cold-sensitive than other shrimp plants — protect in cold snaps."},
+  {common:"Gold Mound / Golden Dewdrops",scientific:"Duranta erecta",category:"Shrub",size:"4–18 ft tall",light:"Full sun",spacing:"4–6 ft",tidbit:"Produces cascades of lavender flowers followed by golden yellow berries — often with both at the same time. The berries are toxic to humans and pets but beloved by birds. Thorny — handles well."},
+  {common:"Green Island Ficus",scientific:"Ficus microcarpa",category:"Shrub",size:"3–6 ft as a shrub",light:"Full sun to part shade",spacing:"3–4 ft",tidbit:"Maintained as a compact rounded shrub in landscapes, but left alone it grows into a massive strangler fig tree. The round, glossy leaves have a distinctive deep green color. Very tolerant of shearing."},
+  {common:"Hibiscus",scientific:"Hibiscus rosa-sinensis",category:"Shrub",size:"4–10 ft tall",light:"Full sun",spacing:"4–6 ft",tidbit:"The national flower of Malaysia and Hawaii. Flowers last only one day but new ones open daily during warm months. The flowers are edible and used to make tea. Hummingbirds love the large blooms."},
+  {common:"Holly - Burford",scientific:"Ilex cornuta",category:"Shrub",size:"8–10 ft tall and wide",light:"Full sun to part shade",spacing:"6–8 ft",tidbit:"One of the most reliable hollies for Florida. Produces abundant red berries without needing a male pollinator plant nearby — unusual among hollies. Glossy foliage is beautiful year-round."},
+  {common:"Holly - Miniature",scientific:"Malpighia coccigera",category:"Shrub",size:"2–3 ft tall and wide",light:"Full sun to part shade",spacing:"2–3 ft",tidbit:"Not a true holly but resembles one with small, spiny leaves. Produces tiny pink flowers followed by small red fruits. Makes an excellent low hedge or container plant. Native to the Caribbean."},
+  {common:"Holly - Yaupon",scientific:"Ilex vomitoria",category:"Shrub",size:"7–15 ft tall",light:"Full sun to part shade",spacing:"4–8 ft",tidbit:"The 'vomitoria' species name comes from its use by Native Americans in ritual purification ceremonies involving large quantities of a tea made from the leaves. Produces masses of red berries beloved by birds."},
+  {common:"Ixora",scientific:"Ixora coccinea",category:"Shrub",size:"4–6 ft tall",light:"Full sun",spacing:"3–4 ft",tidbit:"One of Florida's most popular landscape shrubs, producing dense clusters of red, orange, pink, or yellow flowers. Requires acidic soil — yellowing leaves usually mean the soil is too alkaline. Hummingbird magnet."},
+  {common:"Japanese Silvergrass",scientific:"Miscanthus sinensis",category:"Shrub",size:"4–8 ft tall",light:"Full sun",spacing:"4–5 ft",tidbit:"When grown as a large accent shrub, the feathery silver plumes create dramatic movement in the breeze. Winter interest is exceptional as the dried plumes persist through cold months."},
+  {common:"King's Mantle",scientific:"Thunbergia erecta",category:"Shrub",size:"3–6 ft tall",light:"Full sun to part shade",spacing:"3–4 ft",tidbit:"The deep purple flowers with yellow throats look like miniature trumpets. A prolific bloomer that flowers almost year-round in Florida. Related to clock vine and black-eyed susan vine."},
+  {common:"Loropetalum",scientific:"Loropetalum chinense",category:"Shrub",size:"6–15 ft tall",light:"Full sun to part shade",spacing:"5–8 ft",tidbit:"The burgundy-leafed varieties maintain color best with more sun. Produces fringe-like hot pink flowers in spring. In China it's called 'witch hazel' — it's related to the North American witch hazel family."},
+  {common:"Natal-Plum",scientific:"Carissa macrocarpa",category:"Shrub",size:"5–7 ft tall",light:"Full sun",spacing:"4–5 ft",tidbit:"One of the most salt-tolerant shrubs available. Produces edible red fruits that taste like cranberries and make excellent jelly. The forked thorns are serious — great for security hedges."},
+  {common:"Oleander",scientific:"Nerium oleander",category:"Shrub",size:"8–12 ft tall",light:"Full sun",spacing:"6–8 ft",tidbit:"One of the most toxic plants in the world — every part is poisonous. Despite this, it's among the most planted shrubs in the American South for its showy flowers and toughness. Never burn the wood."},
+  {common:"Peregrina",scientific:"Jatropha integerrima",category:"Shrub",size:"6–10 ft tall",light:"Full sun",spacing:"5–6 ft",tidbit:"Produces vivid red coral-like flower clusters nearly year-round in Florida. An outstanding hummingbird and butterfly plant. Seeds are extremely toxic — all parts should be treated as poisonous."},
+  {common:"Pittosporum",scientific:"Pittosporum tobira",category:"Shrub",size:"6–12 ft tall",light:"Full sun to part shade",spacing:"5–8 ft",tidbit:"One of Florida's most versatile and dependable shrubs. The spring flowers smell of orange blossoms. Extremely tolerant of salt, drought, and neglect. Variegated varieties add light to shaded areas."},
+  {common:"Plumbago",scientific:"Plumbago auriculata",category:"Shrub",size:"4–6 ft tall, spreading",light:"Full sun",spacing:"4–5 ft",tidbit:"The clear sky-blue flower color is relatively rare in the garden world. Blooms heavily from spring through fall. The sticky flower bracts attach to animal fur (and clothing) for seed dispersal."},
+  {common:"Podocarpus",scientific:"Podocarpus macrophyllus",category:"Shrub",size:"6–40 ft (as hedge, kept 6–10 ft)",light:"Full sun to part shade",spacing:"3–5 ft as hedge",tidbit:"One of Florida's most popular hedge plants — tolerates heavy shearing beautifully. A gymnosperm (related to pines and cedars) but looks nothing like them. Fleshy red 'berries' are actually modified cones."},
+  {common:"Red Powderpuff",scientific:"Calliandra haematocephala",category:"Shrub",size:"8–15 ft tall",light:"Full sun to part shade",spacing:"6–8 ft",tidbit:"Each flower is composed of dozens of long silky red stamens creating a dramatic powder-puff effect up to 3 inches across. Hummingbirds and butterflies are obsessed with the nectar-rich flowers."},
+  {common:"Rose",scientific:"Rosa chinensis",category:"Shrub",size:"2–6 ft tall (varies by variety)",light:"Full sun",spacing:"3–5 ft",tidbit:"Roses have been cultivated for over 5,000 years. Fossil evidence of roses has been found dating back 35 million years. Modern China roses were bred for repeat-blooming — a trait absent in old European roses."},
+  {common:"Rosemary",scientific:"Salvia rosmarinus",category:"Shrub",size:"2–6 ft tall",light:"Full sun",spacing:"2–4 ft",tidbit:"Has been used as a symbol of remembrance and fidelity for millennia. Ancient Greeks wore it during exams believing it improved memory. Research now supports this — compounds in rosemary oil may enhance concentration."},
+  {common:"Rusty Lyonia",scientific:"Lyonia ferruginea",category:"Shrub",size:"6–20 ft tall",light:"Full sun to part shade",spacing:"6–8 ft",tidbit:"A Florida native found naturally in scrub and flatwoods habitats. New growth emerges a striking rusty-red color giving it its common name. Important habitat plant for Florida scrub jays."},
+  {common:"Sandankwa Viburnum",scientific:"Viburnum suspensum",category:"Shrub",size:"6–12 ft tall",light:"Full sun to part shade",spacing:"5–6 ft",tidbit:"One of Florida's most dependable hedge plants. Produces clusters of fragrant pink-tinged white flowers in spring. Tolerates salt, drought, and heavy shearing. Red berries attract birds in fall."},
+  {common:"Schefflera",scientific:"Schefflera arboricola",category:"Shrub",size:"3–8 ft as a shrub",light:"Full sun to part shade",spacing:"3–5 ft",tidbit:"The umbrella-like leaf arrangement is how it earned the nickname 'umbrella plant.' In frost-free conditions it can grow into a large tree. One of the world's most popular houseplants."},
+  {common:"Selloum / Tree Philodendron",scientific:"Philodendron selloum",category:"Shrub",size:"5–8 ft tall, 6–8 ft wide",light:"Part shade",spacing:"5–6 ft",tidbit:"The deeply-cut leaves can reach 5 feet long on mature plants — among the most dramatic tropical foliage available. Produces a spadix flower that heats itself up to 114°F to attract pollinating beetles."},
+  {common:"Simpson's Stopper",scientific:"Myrcianthes fragrans",category:"Shrub",size:"6–20 ft tall",light:"Full sun to part shade",spacing:"5–8 ft",tidbit:"A Florida native with wonderfully fragrant white flowers and orange-red berries beloved by birds. Excellent for wildlife gardens. The aromatic foliage smells of nutmeg when crushed."},
+  {common:"Star Jasmine",scientific:"Jasminum nitidum",category:"Shrub",size:"3–6 ft or vining to 20 ft",light:"Full sun to part shade",spacing:"3–4 ft",tidbit:"Produces masses of bright white star-shaped flowers with an intoxicating sweet fragrance. Blooms in spring with occasional re-bloom. Can be grown as a sprawling shrub or trained up a trellis."},
+  {common:"Sweet Almond Bush",scientific:"Aloysia virgata",category:"Shrub",size:"8–12 ft tall",light:"Full sun",spacing:"5–6 ft",tidbit:"The white flower spikes produce one of the most intensely sweet fragrances in the plant world — a warm almond-vanilla scent. Butterflies flock to it. Cut back hard annually for best blooming."},
+  {common:"Texas Sage",scientific:"Leucophyllum frutescens",category:"Shrub",size:"5–8 ft tall",light:"Full sun",spacing:"4–6 ft",tidbit:"Also called the 'barometer bush' because it blooms in response to humidity changes just before rain — eerily accurate at predicting incoming storms. Silver foliage provides beautiful contrast year-round."},
+  {common:"Thryallis",scientific:"Galphimia glauca",category:"Shrub",size:"4–6 ft tall",light:"Full sun",spacing:"3–4 ft",tidbit:"Produces a nonstop display of small golden-yellow flowers from spring through frost. One of the most butterfly-attractive shrubs available. Native to Mexico and Central America."},
+  {common:"Ti Plant",scientific:"Cordyline fruticosa",category:"Shrub",size:"3–10 ft tall",light:"Full sun to part shade",spacing:"3–4 ft",tidbit:"Considered sacred in Hawaiian, Polynesian, and Asian cultures — planted around homes for good luck and protection. Ancient Polynesians used the leaves to make hula skirts, roof thatch, and food wrappers."},
+  {common:"Titi",scientific:"Cyrilla racemiflora",category:"Shrub",size:"8–15 ft tall",light:"Full sun to part shade",spacing:"6–8 ft",tidbit:"A Florida native found in swamps and wet flatwoods. Produces long cascading racemes of white flowers beloved by bees — titi honey is prized by Florida beekeepers. Semi-evergreen with beautiful fall color."},
+  {common:"Wax Jasmine",scientific:"Jasminum volubile",category:"Shrub",size:"Vine/shrub, 6–10 ft",light:"Full sun to part shade",spacing:"4–5 ft",tidbit:"Fragrant white flowers appear almost year-round. The thick, waxy leaves give it its common name. Can be grown as a sprawling shrub or trained as a vine. Drought tolerant once established."},
+  {common:"Weeping Fern Pine",scientific:"Podocarpus gracilior",category:"Shrub",size:"20–60 ft (kept 8–15 ft by pruning)",light:"Full sun to part shade",spacing:"5–8 ft",tidbit:"The long, feathery, weeping branches create a graceful curtain effect unlike any other tree or shrub. One of the most elegant large accent plants for Florida. Slow growing but extremely long-lived."},
+  {common:"Weeping Lantana",scientific:"Lantana depressa",category:"Shrub",size:"2–3 ft tall, spreading",light:"Full sun",spacing:"3–4 ft",tidbit:"A Florida native lantana (unlike the invasive exotic varieties). Produces yellow flowers and provides critical nectar for butterflies including monarchs and swallowtails. Much better ecological choice than exotic lantanas."},
+  {common:"White Bird-of-Paradise",scientific:"Strelitzia nicolai",category:"Shrub",size:"15–30 ft tall",light:"Full sun",spacing:"8–10 ft",tidbit:"Can grow into a tree-sized plant with banana-like leaves up to 5 feet long. The dramatic white and blue flowers are massive — up to 18 inches tall. An architectural statement plant unlike any other."},
+  {common:"Wild Coffee",scientific:"Psychotria nervosa",category:"Shrub",size:"4–8 ft tall",light:"Part to full shade",spacing:"4–5 ft",tidbit:"A Florida native that produces red berries resembling coffee berries (a relative of true coffee). One of the most important native shrubs for wildlife — Atala butterflies and many birds depend on it."},
+  {common:"Yesterday-Today-Tomorrow",scientific:"Brunfelsia grandiflora",category:"Shrub",size:"5–10 ft tall",light:"Part shade to full sun",spacing:"4–6 ft",tidbit:"Gets its magical name from its flowers, which open purple, fade to lavender the next day, then white the day after — creating a three-color display on one plant simultaneously. All parts are toxic."},
+  {common:"Yellow Shrimp Plant",scientific:"Barleria micans",category:"Shrub",size:"3–5 ft tall",light:"Full sun to part shade",spacing:"3–4 ft",tidbit:"Bright canary-yellow flower spikes bloom almost continuously in warm weather. An outstanding hummingbird and butterfly plant. More heat tolerant than the golden shrimp plant (Pachystachys)."},
+  {common:"Yucca",scientific:"Yucca filamentosa",category:"Shrub",size:"2–3 ft foliage, 5–8 ft in bloom",light:"Full sun",spacing:"3–4 ft",tidbit:"Has a fascinating co-evolutionary relationship with the yucca moth — the only insect that pollinates it. The moth simultaneously lays eggs in the flower. No yucca moth, no seeds. No yucca, no moth."},
+  // ── TREES ─────────────────────────────────────────────────────────────────
+  {common:"Bottlebrush",scientific:"Callistemon viminalis",category:"Tree",size:"15–25 ft tall",light:"Full sun",spacing:"10–15 ft",tidbit:"The crimson flower spikes look exactly like the brushes used to clean bottles. Native to Australia, they produce enormous quantities of nectar attracting hummingbirds, orioles, and bees in abundance."},
+  {common:"Buttonwood",scientific:"Conocarpus erectus",category:"Tree",size:"20–40 ft tall",light:"Full sun",spacing:"15–20 ft",tidbit:"One of Florida's most salt-tolerant native trees — grows naturally in coastal mangrove zones. The button-shaped seed clusters give it its name. Extremely tough; used extensively in coastal landscapes."},
+  {common:"Crape Myrtle",scientific:"Lagerstroemia indica",category:"Tree",size:"10–30 ft tall (varies by variety)",light:"Full sun",spacing:"10–20 ft",tidbit:"Called the 'lilac of the South.' The smooth peeling bark reveals beautiful multi-colored patches of cream, tan, and gray. Blooms when most other trees don't — a brilliant summer spectacle."},
+  {common:"Elderberry",scientific:"Sambucus canadensis",category:"Tree",size:"5–12 ft tall",light:"Full sun to part shade",spacing:"6–8 ft",tidbit:"One of North America's most versatile native plants — flowers used for elderflower cordial, fruits for elderberry syrup (famous as an immune booster). An exceptional wildlife plant attracting dozens of bird species."},
+  {common:"Fiddlewood",scientific:"Citharexylum spinosum",category:"Tree",size:"15–30 ft tall",light:"Full sun",spacing:"15–20 ft",tidbit:"A Florida native tree that produces masses of small white fragrant flowers. An outstanding butterfly plant — giant swallowtails and other large butterflies are strongly attracted to it."},
+  {common:"Florida Privet",scientific:"Forestiera segregata",category:"Tree",size:"6–15 ft tall",light:"Full sun to part shade",spacing:"6–10 ft",tidbit:"A tough Florida native found in a variety of habitats from coastal scrub to hardwood hammocks. Small dark berries attract migrating birds. Excellent for wildlife gardens and native hedges."},
+  {common:"Frangipani",scientific:"Plumeria rubra",category:"Tree",size:"15–25 ft tall",light:"Full sun",spacing:"10–15 ft",tidbit:"The iconic flower of Hawaiian leis. In Hawaii a flower worn over the left ear signals 'taken,' right ear signals 'available.' The intense fragrance is used in one of the world's most expensive perfumes."},
+  {common:"Geiger Tree",scientific:"Cordia sebestena",category:"Tree",size:"15–25 ft tall",light:"Full sun",spacing:"10–15 ft",tidbit:"Named after a Key West sea captain who was fond of the tree. The brilliant orange clusters bloom nearly year-round in South Florida. Hummingbirds adore it. One of the showiest Florida native trees."},
+  {common:"Holly - Dahoon",scientific:"Ilex cassine",category:"Tree",size:"20–30 ft tall",light:"Full sun to part shade",spacing:"10–15 ft",tidbit:"A Florida native holly that grows naturally in swamps and wet areas. Produces abundant red berries loved by cedar waxwings, robins, and mockingbirds. Important food source for wildlife in winter."},
+  {common:"Holly - East Palatka",scientific:"Ilex x attenuata",category:"Tree",size:"20–30 ft tall",light:"Full sun to part shade",spacing:"10–15 ft",tidbit:"A naturally occurring hybrid first found near Palatka, Florida. Combines the best traits of its parent species — attractive year-round foliage and heavy berry production that feeds birds through winter."},
+  {common:"Hong Kong Orchid Tree",scientific:"Bauhinia blakeana",category:"Tree",size:"20–40 ft tall",light:"Full sun",spacing:"15–20 ft",tidbit:"The spectacular magenta-purple flowers are Hong Kong's official emblem, depicted on its flag and coins. Ironically this tree produces no seeds — every specimen in the world is a clone propagated by cuttings."},
+  {common:"Jamaica Caper",scientific:"Capparis cynophallophora",category:"Tree",size:"15–20 ft tall",light:"Full sun",spacing:"10–15 ft",tidbit:"A Florida native tree related to the caper used in cooking. The white flowers that open at night have spider-like purple stamens and release a sweet fragrance to attract night-flying moths."},
+  {common:"Little Gem Magnolia",scientific:"Magnolia grandiflora",category:"Tree",size:"15–20 ft tall",light:"Full sun to part shade",spacing:"10–15 ft",tidbit:"A compact cultivar of Southern Magnolia that fits where the full-sized tree (80 ft) cannot. The enormous white flowers can be 12 inches across and smell of lemon. State flower of Mississippi and Louisiana."},
+  {common:"Necklace Pod",scientific:"Sophora tomentosa",category:"Tree",size:"8–15 ft tall",light:"Full sun",spacing:"8–10 ft",tidbit:"A Florida native coastal shrub/small tree with bright yellow flowers beloved by hummingbirds. After flowering, the distinctive constricted seed pods look like necklaces. Salt and drought tolerant."},
+  {common:"Poinciana",scientific:"Caesalpinia pulcherrima",category:"Tree",size:"10–15 ft tall",light:"Full sun",spacing:"8–10 ft",tidbit:"Called 'Pride of Barbados' — it's Barbados's national flower. Produces spectacular red-orange flowers with long stamens nearly year-round. An exceptional hummingbird and butterfly plant."},
+  {common:"Seagrape",scientific:"Coccoloba uvifera",category:"Tree",size:"20–35 ft tall",light:"Full sun",spacing:"15–20 ft",tidbit:"A Florida native that grows naturally on beaches and coastal dunes. The large round leaves turn red and fall seasonally. The purple grape-like fruits are edible and made into jelly. Extremely salt tolerant."},
+  {common:"Silver Buttonwood",scientific:"Conocarpus erectus sericeus",category:"Tree",size:"15–20 ft tall",light:"Full sun",spacing:"10–15 ft",tidbit:"The silver-leafed variety of buttonwood has a striking appearance that pairs beautifully with green-leafed plants. The silvery color comes from fine hairs on the leaves that reflect sunlight and reduce heat."},
+  {common:"Stoppers",scientific:"Eugenia spp.",category:"Tree",size:"10–20 ft tall",light:"Full sun to part shade",spacing:"8–12 ft",tidbit:"A group of Florida native trees in the myrtle family. The name 'stopper' comes from their traditional use as a treatment for diarrhea. Produce colorful berries that attract birds. Aromatic foliage when crushed."},
+  {common:"Swamp Dogwood",scientific:"Cornus foemina",category:"Tree",size:"10–15 ft tall",light:"Full sun to part shade",spacing:"8–10 ft",tidbit:"A Florida native understory tree that thrives in moist soils along streams and ponds. Small white flower clusters attract pollinators. Blue-black berries are an important food for migrating birds in fall."},
+  {common:"Sweet Acacia",scientific:"Vachellia farnesiana",category:"Tree",size:"15–25 ft tall",light:"Full sun",spacing:"10–15 ft",tidbit:"The intensely fragrant yellow pompom flowers have been used in French perfumery since the 17th century. The scent of 'cassie' (as it's known in perfumery) is still used in high-end fragrances today."},
+  {common:"Sweet Viburnum",scientific:"Viburnum odoratissimum",category:"Tree",size:"10–20 ft tall",light:"Full sun to part shade",spacing:"6–10 ft",tidbit:"One of Florida's most popular large hedges or small trees. Produces clusters of sweetly fragrant white flowers in spring. Red then black berries attract birds. Grows quickly to create privacy screening."},
+  {common:"Tabebuia",scientific:"Tabebuia heterophylla",category:"Tree",size:"30–50 ft tall",light:"Full sun",spacing:"20–25 ft",tidbit:"Produces one of Florida's most breathtaking floral displays — a bare tree suddenly exploding into a cloud of pink or yellow trumpets before the leaves appear. The blooming lasts only 1–2 weeks but is unforgettable."},
+  {common:"Walter's Viburnum",scientific:"Viburnum obovatum",category:"Tree",size:"6–15 ft tall",light:"Full sun to part shade",spacing:"5–8 ft",tidbit:"Florida's native viburnum — far superior ecologically to exotic viburnums. An important larval host plant and nectar source. Semi-evergreen with interesting fall color. Used as a hedge or small specimen tree."},
+  {common:"White Geiger",scientific:"Cordia boissieri",category:"Tree",size:"10–20 ft tall",light:"Full sun",spacing:"10–15 ft",tidbit:"Related to the orange Geiger tree but with pure white flowers. Native to Texas and Mexico. Produces white trumpet flowers almost year-round in South Florida. Drought and heat tolerant once established."},
+  {common:"Ylang Ylang",scientific:"Cananga odorata",category:"Tree",size:"40–60 ft tall",light:"Full sun",spacing:"20–30 ft",tidbit:"The yellow-green star-shaped flowers produce one of the world's most iconic perfume ingredients — used in Chanel No. 5 and many other famous fragrances. The fragrance intensifies at night. Fast-growing."},
 ];
-
 const CATS = ['All','Annual','Perennial','Annual / Perennial','Grass','Ground Cover','Palm','Shrub','Tree'];
 const imgCache = {};
 let activeFilter = 'All';
@@ -531,7 +533,11 @@ function openModal(plant) {
       <div class="info-row"><span class="info-label">Common Name</span><span class="info-val">${plant.common}</span></div>
       <div class="info-row"><span class="info-label">Scientific</span><span class="info-val"><em>${plant.scientific}</em></span></div>
       <div class="info-row"><span class="info-label">Category</span><span class="info-val">${plant.category}</span></div>
+      ${plant.size ? `<div class="info-row"><span class="info-label">Size</span><span class="info-val">${plant.size}</span></div>` : ''}
+      ${plant.light ? `<div class="info-row"><span class="info-label">Light</span><span class="info-val">${plant.light}</span></div>` : ''}
+      ${plant.spacing ? `<div class="info-row"><span class="info-label">Spacing</span><span class="info-val">${plant.spacing}</span></div>` : ''}
       <div class="info-row"><span class="info-label">HOA Status</span><span class="info-val approved">✓ Approved for Bridgetown</span></div>
+      ${plant.tidbit ? `<div class="tidbit">💡 ${plant.tidbit}</div>` : ''}
     </div>
     <div class="modal-credit">📷 Photo sourced from <a href="https://www.inaturalist.org" target="_blank">iNaturalist.org</a> — © respective contributors (CC BY-NC)</div>`;
   document.getElementById('overlay').classList.add('open');
@@ -588,5 +594,6 @@ document.getElementById('overlay').addEventListener('click', function(e) {
 
 renderGrid();
 </script>
+
 </body>
 </html>
