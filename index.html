@@ -52,7 +52,15 @@ header { background: var(–green-deep); padding: 18px 16px 12px; position: stic
 .card-body { padding: 10px 12px 12px; }
 .card-common { font-family: ‘Playfair Display’, serif; font-size: 14px; font-weight: 700; color: var(–green-deep); line-height: 1.3; margin-bottom: 3px; }
 .card-sci { font-size: 11px; font-style: italic; color: var(–muted); margin-bottom: 7px; }
-.badge { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; background: #1a1a1a; color: #fff; }
+.badge { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 700; }
+.badge-Annual { background: #f59e0b; color: #fff; }
+.badge-Perennial { background: #16a34a; color: #fff; }
+.badge-AnnualPerennial { background: #7c3aed; color: #fff; }
+.badge-Grass { background: #0d9488; color: #fff; }
+.badge-GroundCover { background: #ea580c; color: #fff; }
+.badge-Palm { background: #b45309; color: #fff; }
+.badge-Shrub { background: #1d4ed8; color: #fff; }
+.badge-Tree { background: #be123c; color: #fff; }
 
 /* Modal */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1000; display: flex; align-items: flex-end; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
@@ -70,7 +78,7 @@ header { background: var(–green-deep); padding: 18px 16px 12px; position: stic
 .info-label { font-weight: 700; color: var(–green-mid); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; width: 110px; flex-shrink: 0; padding-top: 1px; }
 .info-val { color: #333; line-height: 1.5; }
 .info-val.approved { color: var(–green-mid); font-weight: 700; }
-.tidbit { background: #f0f7f2; border-left: 3px solid var(–green-mid); border-radius: 0 8px 8px 0; padding: 10px 14px; margin: 16px 0 4px; font-size: 13px; color: #2d4a38; line-height: 1.6; font-style: italic; }
+.tidbit { background: #f0f7f2; border-left: 3px solid var(–green-mid); border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 16px 0 4px; font-size: 15px; color: #1a3022; line-height: 1.7; font-style: italic; }
 .modal-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 50%; background: rgba(0,0,0,0.2); border: none; color: #fff; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 .modal-credit { font-size: 11px; color: #888; text-align: center; padding: 8px 20px 4px; }
 .modal-credit a { color: #2d5a3d; font-weight: 600; text-decoration: underline; }
@@ -334,6 +342,7 @@ const PLANTS = [
   {common:"White Geiger",scientific:"Cordia boissieri",category:"Tree",size:"10–20 ft tall",light:"Full sun",spacing:"10–15 ft",tidbit:"Related to the orange Geiger tree but with pure white flowers. Native to Texas and Mexico. Produces white trumpet flowers almost year-round in South Florida. Drought and heat tolerant once established."},
   {common:"Ylang Ylang",scientific:"Cananga odorata",category:"Tree",size:"40–60 ft tall",light:"Full sun",spacing:"20–30 ft",tidbit:"The yellow-green star-shaped flowers produce one of the world's most iconic perfume ingredients — used in Chanel No. 5 and many other famous fragrances. The fragrance intensifies at night. Fast-growing."},
 ];
+function badgeClass(cat) { return "badge badge-" + cat.replace(/ \/ /g,"").replace(/ /g,""); }
 const CATS = ['All','Annual','Perennial','Annual / Perennial','Grass','Ground Cover','Palm','Shrub','Tree'];
 const imgCache = {};
 let activeFilter = 'All';
@@ -470,7 +479,7 @@ function renderGrid() {
       <div class="card-body">
         <div class="card-common">${plant.common}</div>
         <div class="card-sci">${plant.scientific}</div>
-        <span class="badge">${plant.category}</span>
+        <span class="${badgeClass(plant.category)}">${plant.category}</span>
       </div>`;
     card.onclick = () => openModal(plant);
     grid.appendChild(card);
@@ -529,7 +538,7 @@ function openModal(plant) {
     <div class="modal-body">
       <div class="modal-name">${plant.common}</div>
       <div class="modal-sci">${plant.scientific}</div>
-      <div class="modal-meta"><span class="badge">${plant.category}</span></div>
+      <div class="modal-meta"><span class="${badgeClass(plant.category)}">${plant.category}</span></div>
       <div class="info-row"><span class="info-label">Common Name</span><span class="info-val">${plant.common}</span></div>
       <div class="info-row"><span class="info-label">Scientific</span><span class="info-val"><em>${plant.scientific}</em></span></div>
       <div class="info-row"><span class="info-label">Category</span><span class="info-val">${plant.category}</span></div>
